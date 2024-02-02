@@ -227,8 +227,8 @@ jobs:
     runs-on: macos-latest
     env:
       LABEL: osx
-      CC: /usr/local/opt/gcc@13/bin/gcc-13
-      CXX: /usr/local/opt/gcc@13/bin/g++-13
+      CC: /usr/local/opt/gcc@12/bin/gcc-12
+      CXX: /usr/local/opt/gcc@12/bin/g++-12
       CCACHE_DIR: $GITHUB_WORKSPACE/.ccache
     steps:
       - uses: actions/checkout@v2
@@ -236,8 +236,8 @@ jobs:
       # Fetch Dependencies
       - name: Dependencies
         run: |
-          ls /usr/local/opt/gcc@13/bin/
-          brew install --force ccache gcc@13
+          ls /usr/local/opt/gcc@12/bin/
+          brew install --force ccache gcc@12
           curl -OL https://boostorg.jfrog.io/artifactory/main/release/1.80.0/source/boost_1_80_0.tar.bz2
           tar -xjf boost_1_80_0.tar.bz2
           cd boost_1_80_0
