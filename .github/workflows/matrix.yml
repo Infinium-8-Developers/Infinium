@@ -238,6 +238,7 @@ jobs:
         run: |
           ls /usr/local/opt/gcc@11/bin/
           brew install --force ccache gcc@11 zlib
+          brew link zlib
           curl -OL https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/boost_1_82_0.tar.bz2
           tar -xjf boost_1_82_0.tar.bz2
           cd boost_1_82_0
