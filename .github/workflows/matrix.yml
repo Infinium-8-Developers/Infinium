@@ -242,6 +242,7 @@ jobs:
           tar -xjf boost_1_80_0.tar.bz2
           cd boost_1_80_0
           ./bootstrap.sh
+          echo using gcc : 12.3 : /usr/local/opt/gcc@12/bin/g++-12 >> project-config.jam
           ./b2
           
           cd ..
