@@ -238,9 +238,9 @@ jobs:
         run: |
           ls /usr/local/opt/gcc@11/bin/
           brew install --force ccache gcc@11
-          curl -OL https://boostorg.jfrog.io/artifactory/main/release/1.80.0/source/boost_1_80_0.tar.bz2
-          tar -xjf boost_1_80_0.tar.bz2
-          cd boost_1_80_0
+          curl -OL https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/boost_1_82_0.tar.bz2
+          tar -xjf boost_1_82_0.tar.bz2
+          cd boost_1_82_0
           ./bootstrap.sh --with-toolset=gcc
           ./b2 cxxflags=-std=c++17 --toolset=gcc-11 
           
@@ -256,7 +256,7 @@ jobs:
       - name: Configure
         run: |
           mkdir build && cd build
-          cmake -D BOOST_ROOT=/Users/runner/work/Infinium/Infinium/boost_1_80_0 -D BUILD_GUI=OFF -D CMAKE_BUILD_TYPE=Release  -D BUILD_TESTS=OFF ..
+          cmake -D BOOST_ROOT=/Users/runner/work/Infinium/Infinium/boost_1_82_0 -D BUILD_GUI=OFF -D CMAKE_BUILD_TYPE=Release  -D BUILD_TESTS=OFF ..
       # Build for macOS
       - name: Build
         run: |
