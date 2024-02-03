@@ -246,6 +246,15 @@ jobs:
           ./b2 cxxflags=-std=c++17 --toolset=gcc-11 
           
           cd ..
+
+          curl -OL https://www.openssl.org/source/openssl-1.1.1n.tar.gz
+          tar xaf openssl-1.1.1n.tar.gz 
+          cd openssl-1.1.1n/
+          ./config --prefix=/home/runner/work/Infinium/Infinium/openssl --openssldir=/home/runner/work/Infinium/Infinium/openssl shared zlib
+          make
+          make install
+          
+          cd ..
           
       - name: Retrieve ccache
         uses: actions/cache@v1
@@ -257,7 +266,7 @@ jobs:
       - name: Configure
         run: |
           mkdir build && cd build
-          cmake -D BOOST_ROOT=/Users/runner/work/Infinium/Infinium/boost_1_82_0 -D BOOST_LIBRARYDIR=/Users/runner/work/Infinium/Infinium/boost_1_82_0/stage/lib -D BUILD_GUI=OFF -D CMAKE_BUILD_TYPE=Release  -D BUILD_TESTS=OFF ..
+          cmake -D BOOST_ROOT=/Users/runner/work/Infinium/Infinium/boost_1_82_0 -D BOOST_LIBRARYDIR=/Users/runner/work/Infinium/Infinium/boost_1_82_0/stage/lib  -D OPENSSL_ROOT_DIR=/home/runner/work/Infinium/Infinium/openssl -D BUILD_GUI=OFF -D CMAKE_BUILD_TYPE=Release  -D BUILD_TESTS=OFF ../..
       # Build for macOS
       - name: Build
         run: |
