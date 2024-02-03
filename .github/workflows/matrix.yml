@@ -237,7 +237,7 @@ jobs:
       - name: Dependencies
         run: |
           ls /usr/local/opt/gcc@11/bin/
-          brew install --force ccache gcc@11
+          brew install --force ccache gcc@11 zlib
           curl -OL https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/boost_1_82_0.tar.bz2
           tar -xjf boost_1_82_0.tar.bz2
           cd boost_1_82_0
@@ -256,7 +256,7 @@ jobs:
       - name: Configure
         run: |
           mkdir build && cd build
-          cmake -D BOOST_ROOT=/Users/runner/work/Infinium/Infinium/boost_1_82_0 -D BUILD_GUI=OFF -D CMAKE_BUILD_TYPE=Release  -D BUILD_TESTS=OFF -D STATIC=ON ..
+          cmake -D BOOST_ROOT=/Users/runner/work/Infinium/Infinium/boost_1_82_0 -D BUILD_GUI=OFF -D CMAKE_BUILD_TYPE=Release  -D BUILD_TESTS=OFF ..
       # Build for macOS
       - name: Build
         run: |
