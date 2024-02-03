@@ -241,13 +241,8 @@ jobs:
           curl -OL https://boostorg.jfrog.io/artifactory/main/release/1.80.0/source/boost_1_80_0.tar.bz2
           tar -xjf boost_1_80_0.tar.bz2
           cd boost_1_80_0
-          ls -la
-          echo using gcc : 12.3 : /usr/local/opt/gcc@12/bin/g++-12 >> project-config.jam
-          echo using gcc : 12.3 : /usr/local/opt/gcc@12/bin/g++-12 >> boost-build.jam
-          ./bootstrap.sh
-          echo using gcc : 12.3 : /usr/local/opt/gcc@12/bin/g++-12 >> project-config.jam
-          echo using gcc : 12.3 : /usr/local/opt/gcc@12/bin/g++-12 >> boost-build.jam
-          ./b2
+          ./bootstrap.sh --with-toolset=gcc
+          ./b2 --toolset=gcc-12.3.0
           
           cd ..
           
