@@ -242,7 +242,7 @@ jobs:
           tar -xjf boost_1_80_0.tar.bz2
           cd boost_1_80_0
           ./bootstrap.sh --with-toolset=gcc
-          ./b2 --toolset=gcc-11
+          ./b2 cxxflags=-std=c++17 --toolset=gcc-11 
           
           cd ..
           
