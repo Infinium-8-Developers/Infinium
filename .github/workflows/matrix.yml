@@ -247,9 +247,9 @@ jobs:
           
           cd ..
 
-          curl -OL https://www.openssl.org/source/openssl-1.1.1n.tar.gz
-          tar -xf openssl-1.1.1n.tar.gz 
-          cd openssl-1.1.1n/
+          curl -OL https://www.openssl.org/source/openssl-3.0.13.tar.gz
+          tar -xf openssl-3.0.13.tar.gz 
+          cd openssl-3.0.13/
           ./config --prefix=/home/runner/work/Infinium/Infinium/openssl --openssldir=/home/runner/work/Infinium/Infinium/openssl shared zlib
           make
           make install
