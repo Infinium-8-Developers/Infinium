@@ -257,7 +257,7 @@ jobs:
       - name: Configure
         run: |
           mkdir build && cd build
-          cmake -D BOOST_ROOT=/Users/runner/work/Infinium/Infinium/boost_1_82_0 -D BUILD_GUI=OFF -D CMAKE_BUILD_TYPE=Release  -D BUILD_TESTS=OFF ..
+          cmake -D BOOST_ROOT=/Users/runner/work/Infinium/Infinium/boost_1_82_0 -D BOOST_LIBRARYDIR=/Users/runner/work/Infinium/Infinium/boost_1_82_0/stage/lib -D BUILD_GUI=OFF -D CMAKE_BUILD_TYPE=Release  -D BUILD_TESTS=OFF ..
       # Build for macOS
       - name: Build
         run: |
