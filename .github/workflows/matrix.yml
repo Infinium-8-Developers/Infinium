@@ -250,9 +250,10 @@ jobs:
           curl -OL https://www.openssl.org/source/openssl-3.0.13.tar.gz
           tar -xf openssl-3.0.13.tar.gz 
           cd openssl-3.0.13/
-          ./config --prefix=/home/runner/work/Infinium/Infinium/openssl --openssldir=/home/runner/work/Infinium/Infinium/openssl shared zlib
-          make
+          ./configure  darwin64-x86_64-cc --prefix=/home/runner/work/Infinium/Infinium/openssl --openssldir=/home/runner/work/Infinium/Infinium/openssl -mmacosx-version-min=10.12 shared zlib
+          make depend
           make install
+          make distclean
           
           cd ..
           
