@@ -253,7 +253,6 @@ jobs:
           ./configure  darwin64-x86_64-cc --prefix=/home/runner/work/Infinium/Infinium/openssl --openssldir=/home/runner/work/Infinium/Infinium/openssl -mmacosx-version-min=10.12 shared zlib
           make
           make install
-          make distclean
           
           cd ..
           
