@@ -284,8 +284,8 @@ jobs:
         run: |
           if [[ "${TAG:5:4}" == "tags" ]]; then export TAG=${TAG:10}; else export TAG=${COMMIT_SHA}; fi
           cd build/src/Release
-          DIR D:\a\Infinium\Qt\5.15.2
-          D:\a\Infinium\Qt\5.15.2\bin\windeployqt.exe infinium.exe
+          dir "D:\a\Infinium\Qt\5.15.2\"
+          "D:\a\Infinium\Qt\5.15.2\bin\windeployqt.exe" infinium.exe
           rm -rf Infinium-${TAG}
           mkdir Infinium-${TAG}
           cp *.exe Infinium-${TAG}/          
