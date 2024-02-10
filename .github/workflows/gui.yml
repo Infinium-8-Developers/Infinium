@@ -288,7 +288,7 @@ jobs:
           mkdir wallet-gui
           cp infinium.exe wallet-gui/
           D:/a/Infinium/Qt/5.15.2/msvc2019_64/bin/windeployqt.exe wallet-gui/infinium.exe
-          cp -r ../../../src/gui/qt-daemon/html wallet-gui/html
+          cp -r ../../../src/gui/qt-daemon/layout/html wallet-gui/html
           rm -rf Infinium-${TAG}
           mkdir Infinium-${TAG}
           cp -r wallet-gui/ Infinium-${TAG}/ 
