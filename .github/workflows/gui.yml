@@ -243,7 +243,91 @@ jobs:
         with:
           name: Infinium-${{ github.sha }}-${{ env.LABEL }}
           path: ./build/src/Infinium-${{ github.sha }}
+
           
+
+ # Mac builds on Catalina VM
+  macos_build:
+    name: macOS
+    runs-on: macos-latest
+    env:
+      LABEL: osx
+      CC: /usr/local/opt/llvm@11/bin/clang
+      CXX: /usr/local/opt/llvm@11/bin/clang++
+      CCACHE_DIR: $GITHUB_WORKSPACE/.ccache
+    steps:
+      - uses: actions/checkout@v2
+
+      # Fetch Dependencies
+      - name: Dependencies
+        run: |
+          brew install --force ccache llvm@11
+          ls /usr/local/opt/llvm@11/bin
+
+       # Fetch Dependencies
+      - name: Install Boost
+        run: |    
+          curl -OL https://boostorg.jfrog.io/artifactory/main/release/1.80.0/source/boost_1_80_0.tar.bz2
+          tar -xjf boost_1_80_0.tar.bz2
+          cd boost_1_80_0
+          ./bootstrap.sh 
+          ./b2 
+          cd ..
+          
+      - name: Retrieve ccache
+        uses: actions/cache@v1
+        with:
+          path: .ccache
+          key: ccache-osx
+
+      # Configure project with cmake
+      - name: Configure
+        run: |
+          mkdir build && cd build
+          cmake -D BOOST_ROOT=/Users/runner/work/Infinium/Infinium/boost_1_80_0 -D BOOST_LIBRARYDIR=/Users/runner/work/Infinium/Infinium/boost_1_80_0/stage/lib  -D OPENSSL_ROOT_DIR=/usr/local/opt/openssl -D BUILD_GUI=OFF -D CMAKE_BUILD_TYPE=Release  -D BUILD_TESTS=OFF ..
+      
+      # Build for macOS
+      - name: Build
+        run: |
+          cd build
+          make
+           
+       # Prepare for deploy
+      - name: Prepare for Deploy
+        id: before_deploy
+        env:
+          COMMIT_SHA: ${{ github.sha }}
+        run: |
+          if [[ "${TAG:5:4}" == "tags" ]]; then export TAG=${TAG:10}; else export TAG=${COMMIT_SHA}; fi
+          cd build/src
+          TARGETS="infiniumd connectivity_tool simplewallet"
+          if [[ "${LABEL}" != "aarch64" ]]; then strip ${TARGETS}; fi
+          rm -rf Infinium-${TAG}
+          mkdir Infinium-${TAG}
+          cp ${TARGETS} Infinium-${TAG}/
+          tar cvfz Infinium-${TAG}-${LABEL}.tar.gz Infinium-${TAG}/
+          
+      # Upload to GH Release
+      - name: Upload to GH Release
+        if: github.event_name == 'release' && matrix.deployable
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./build/src/Infinium-${{ github.event.release.tag_name }}-${{ env.LABEL }}.tar.gz
+          asset_name: Infinium-${{ github.event.release.tag_name }}-${{ env.LABEL }}.tar.gz
+          asset_content_type: application/gzip  
+          
+      # Upload to GH Actions Artifacts
+      - name: Upload To GH Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: Infinium-${{ github.sha }}-${{ env.LABEL }}
+          path: ./build/src/Infinium-${{ github.sha }}
+
+
+                              
   # Windows 10        
   windows_build:
     name: Windows
