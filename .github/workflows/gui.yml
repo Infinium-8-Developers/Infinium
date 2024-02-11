@@ -283,17 +283,13 @@ jobs:
           COMMIT_SHA: ${{ github.sha }}
         run: |
           if [[ "${TAG:5:4}" == "tags" ]]; then export TAG=${TAG:10}; else export TAG=${COMMIT_SHA}; fi
-          dir D:/a/Infinium/Qt/5.15.2/msvc2019_64/bin/
           cd build/src/Release
-          mkdir wallet-gui
-          cp infinium.exe wallet-gui/
-          D:/a/Infinium/Qt/5.15.2/msvc2019_64/bin/windeployqt.exe wallet-gui/infinium.exe
-          cp -r ../../../src/gui/qt-daemon/layout/html wallet-gui/html
-          rm -rf Infinium-${TAG}
-          mkdir Infinium-${TAG}
-          cp -r wallet-gui/ Infinium-${TAG}/ 
-          cp *.exe Infinium-${TAG}/          
-          7z a Infinium-${TAG}-${LABEL}.zip Infinium-${TAG}/
+          rm -rf Infinium-${TAG}-gui
+          mkdir Infinium-${TAG}-gui
+          cp infinium.exe Infinium-${TAG}-gui/
+          D:/a/Infinium/Qt/5.15.2/msvc2019_64/bin/windeployqt.exe Infinium-${TAG}-gui/infinium.exe
+          cp -r ../../../src/gui/qt-daemon/layout/html Infinium-${TAG}-gui/html       
+          7z a Infinium-${TAG}-gui-${LABEL}.zip Infinium-${TAG}-gui/
 
       # Upload to GH Release
       - name: Upload to GH Release
@@ -303,13 +299,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./build/src/Release/Infinium-${{ github.event.release.tag_name }}-${{ env.LABEL }}.zip
-          asset_name: Infinium-${{ github.event.release.tag_name }}-${{ env.LABEL }}.zip
+          asset_path: ./build/src/Release/Infinium-${{ github.event.release.tag_name }}-gui-${{ env.LABEL }}.zip
+          asset_name: Infinium-${{ github.event.release.tag_name }}-gui-${{ env.LABEL }}.zip
           asset_content_type: application/zip
 
       # Upload to GH Actions Artifacts
       - name: Upload To GH Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: Infinium-${{ github.sha }}-${{ env.LABEL }}
-          path: ./build/src/Release/Infinium-${{ github.sha }}   
+          name: Infinium-${{ github.sha }}-gui-${{ env.LABEL }}
+          path: ./build/src/Release/Infinium-${{ github.sha }}-gui   
