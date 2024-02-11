@@ -220,7 +220,7 @@ message(STATUS "Boost: ${Boost_VERSION} from ${Boost_LIBRARY_DIRS}")
 
 include_directories(SYSTEM ${Boost_INCLUDE_DIRS} ${PROJECT_SOURCE_DIR}/contrib/ethereum/libethash)
 
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lm -ldl -static-libgcc -static-libstdc++")
+# set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lm -ldl -static-libgcc -static-libstdc++")
 
 #set(Boost_LIBRARIES "${Boost_LIBRARIES};/usr/lib/x86_64-linux-gnu/libm.a;/usr/lib/x86_64-linux-gnu/libdl.a")
 
