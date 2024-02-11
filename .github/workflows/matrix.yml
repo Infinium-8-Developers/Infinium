@@ -227,8 +227,8 @@ jobs:
     runs-on: macos-latest
     env:
       LABEL: osx
-      CC: /usr/local/opt/llvm@15/bin/clang
-      CXX: /usr/local/opt/llvm@15/bin/clang++
+      CC: /usr/local/opt/llvm/bin/clang
+      CXX: /usr/local/opt/llvm/bin/clang++
       CCACHE_DIR: $GITHUB_WORKSPACE/.ccache
     steps:
       - uses: actions/checkout@v2
