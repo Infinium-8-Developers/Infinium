@@ -242,11 +242,11 @@ jobs:
        # Fetch Dependencies
       - name: Install Boost
         run: |    
-          curl -OL https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/boost_1_82_0.tar.bz2
-          tar -xjf boost_1_82_0.tar.bz2
-          cd boost_1_82_0
-          ./bootstrap.sh --with-toolset=clang
-          ./b2 --toolset=clang
+          curl -OL https://boostorg.jfrog.io/artifactory/main/release/1.80.0/source/boost_1_80_0.tar.bz2
+          tar -xjf boost_1_80_0.tar.bz2
+          cd boost_1_80_0
+          ./bootstrap.sh 
+          ./b2 
           cd ..
           
       - name: Retrieve ccache
@@ -259,7 +259,7 @@ jobs:
       - name: Configure
         run: |
           mkdir build && cd build
-          cmake -D BOOST_ROOT=/Users/runner/work/Infinium/Infinium/boost_1_82_0 -D BOOST_LIBRARYDIR=/Users/runner/work/Infinium/Infinium/boost_1_82_0/stage/lib  -D OPENSSL_ROOT_DIR=/usr/local/opt/openssl -D BUILD_GUI=OFF -D CMAKE_BUILD_TYPE=Release  -D BUILD_TESTS=OFF ..
+          cmake -D BOOST_ROOT=/Users/runner/work/Infinium/Infinium/boost_1_80_0 -D BOOST_LIBRARYDIR=/Users/runner/work/Infinium/Infinium/boost_1_80_0/stage/lib  -D OPENSSL_ROOT_DIR=/usr/local/opt/openssl -D BUILD_GUI=OFF -D CMAKE_BUILD_TYPE=Release  -D BUILD_TESTS=OFF ..
       # Build for macOS
       - name: Build
         run: |
