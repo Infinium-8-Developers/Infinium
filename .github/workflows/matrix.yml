@@ -236,27 +236,28 @@ jobs:
       # Fetch Dependencies
       - name: Dependencies
         run: |
-          ls /usr/local/opt/llvm@15/
           brew install --force ccache llvm@11
-          ls /usr/local/opt/llvm@15/
           ls /usr/local/opt/llvm@15/bin
-          ls /usr/local/opt/
-          
+
+       # Fetch Dependencies
+      - name: Install Boost
+        run: |    
           curl -OL https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/boost_1_82_0.tar.bz2
           tar -xjf boost_1_82_0.tar.bz2
           cd boost_1_82_0
           ./bootstrap.sh --with-toolset=clang
           ./b2 --toolset=clang-15 
-          
           cd ..
-
+          
+      # Install OpenSSH
+      - name: Install OpenSSH
+        run: |
           curl -OL https://www.openssl.org/source/openssl-3.0.13.tar.gz
           tar -xf openssl-3.0.13.tar.gz 
           cd openssl-3.0.13/
           ./configure  darwin64-x86_64-cc --prefix=/home/runner/work/Infinium/Infinium/openssl --openssldir=/home/runner/work/Infinium/Infinium/openssl -mmacosx-version-min=10.12 shared zlib
           make
           make install
-          
           cd ..
           
       - name: Retrieve ccache
