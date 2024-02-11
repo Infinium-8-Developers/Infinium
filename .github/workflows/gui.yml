@@ -62,9 +62,21 @@ jobs:
           make
           make install
           cd ..
+          
       - name: Setup ccache
         run: |
           sudo apt install ccache
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          aqtversion: '==3.1.*'
+          version: '5.15.2'
+          host: 'linux'
+          target: 'desktop'
+          arch: 'gcc_64'
+          modules: 'debug_info qtcharts qtdatavis3d qtlottie qtnetworkauth qtpurchasing qtquick3d qtquicktimeline qtscript qtvirtualkeyboard qtwaylandcompositor qtwebengine qtwebglplugin'
+          
       - name: Retrieve ccache
         uses: actions/cache@v1
         with:
@@ -164,9 +176,21 @@ jobs:
           make
           make install
           cd ..
+          
       - name: Setup ccache
         run: |
           sudo apt install ccache
+          
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          aqtversion: '==3.1.*'
+          version: '5.15.2'
+          host: 'linux'
+          target: 'desktop'
+          arch: 'gcc_64'
+          modules: 'debug_info qtcharts qtdatavis3d qtlottie qtnetworkauth qtpurchasing qtquick3d qtquicktimeline qtscript qtvirtualkeyboard qtwaylandcompositor qtwebengine qtwebglplugin'
+          
       - name: Retrieve ccache
         uses: actions/cache@v1
         with:
