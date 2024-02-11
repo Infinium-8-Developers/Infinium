@@ -260,11 +260,41 @@ jobs:
         run: |
           mkdir build && cd build
           cmake -D BOOST_ROOT=/Users/runner/work/Infinium/Infinium/boost_1_80_0 -D BOOST_LIBRARYDIR=/Users/runner/work/Infinium/Infinium/boost_1_80_0/stage/lib  -D OPENSSL_ROOT_DIR=/usr/local/opt/openssl -D BUILD_GUI=OFF -D CMAKE_BUILD_TYPE=Release  -D BUILD_TESTS=OFF ..
+      
       # Build for macOS
       - name: Build
         run: |
           cd build
           make
+           
+       # Prepare for deploy
+      - name: Prepare for Deploy
+        id: before_deploy
+        env:
+          COMMIT_SHA: ${{ github.sha }}
+        run: |
+          if [[ "${TAG:5:4}" == "tags" ]]; then export TAG=${TAG:10}; else export TAG=${COMMIT_SHA}; fi
+          cd build/src
+          TARGETS="infiniumd connectivity_tool simplewallet"
+          if [[ "${LABEL}" != "aarch64" ]]; then strip ${TARGETS}; fi
+          rm -rf Infinium-${TAG}
+          mkdir Infinium-${TAG}
+          cp ${TARGETS} Infinium-${TAG}/
+          tar cvfz Infinium-${TAG}-${LABEL}.tar.gz Infinium-${TAG}/
+          
+      # Upload to GH Release
+      - name: Upload to GH Release
+        if: github.event_name == 'release' && matrix.deployable
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./build/src/Infinium-${{ github.event.release.tag_name }}-${{ env.LABEL }}.tar.gz
+          asset_name: Infinium-${{ github.event.release.tag_name }}-${{ env.LABEL }}.tar.gz
+          asset_content_type: application/gzip        
+
+
           
   # Windows 10        
   windows_build:
