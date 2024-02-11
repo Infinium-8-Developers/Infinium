@@ -248,17 +248,6 @@ jobs:
           ./b2 --toolset=clang
           cd ..
           
-      # Install OpenSSH
-      - name: Install OpenSSH
-        run: |
-          curl -OL https://www.openssl.org/source/openssl-3.2.1.tar.gz
-          tar -xf openssl-3.2.1.tar.gz 
-          cd openssl-3.2.1/
-          ./configure  --prefix=/home/runner/work/Infinium/Infinium/openssl --openssldir=/home/runner/work/Infinium/Infinium/openssl
-          sudo make
-          sudo make install
-          cd ..
-          
       - name: Retrieve ccache
         uses: actions/cache@v1
         with:
@@ -269,7 +258,7 @@ jobs:
       - name: Configure
         run: |
           mkdir build && cd build
-          cmake -D BOOST_ROOT=/Users/runner/work/Infinium/Infinium/boost_1_82_0 -D BOOST_LIBRARYDIR=/Users/runner/work/Infinium/Infinium/boost_1_82_0/stage/lib  -D OPENSSL_ROOT_DIR=/home/runner/work/Infinium/Infinium/openssl -D BUILD_GUI=OFF -D CMAKE_BUILD_TYPE=Release  -D BUILD_TESTS=OFF ../..
+          cmake -D BOOST_ROOT=/Users/runner/work/Infinium/Infinium/boost_1_82_0 -D BOOST_LIBRARYDIR=/Users/runner/work/Infinium/Infinium/boost_1_82_0/stage/lib  -D OPENSSL_ROOT_DIR=/usr/local/opt/openssl -D BUILD_GUI=OFF -D CMAKE_BUILD_TYPE=Release  -D BUILD_TESTS=OFF ../..
       # Build for macOS
       - name: Build
         run: |
