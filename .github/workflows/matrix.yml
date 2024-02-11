@@ -237,7 +237,7 @@ jobs:
       - name: Dependencies
         run: |
           ls /usr/local/opt/llvm@15/
-          brew install --force ccache llvm@10
+          brew install --force ccache llvm@11
           ls /usr/local/opt/llvm@15/
           ls /usr/local/opt/llvm@15/bin
           ls /usr/local/opt/
