@@ -254,7 +254,7 @@ jobs:
           curl -OL https://www.openssl.org/source/openssl-3.2.1.tar.gz
           tar -xf openssl-3.2.1.tar.gz 
           cd openssl-3.2.1/
-          ./configure  darwin64-x86_64-cc --prefix=/home/runner/work/Infinium/Infinium/openssl --openssldir=/home/runner/work/Infinium/Infinium/openssl shared zlib
+          ./configure  --prefix=/home/runner/work/Infinium/Infinium/openssl --openssldir=/home/runner/work/Infinium/Infinium/openssl shared zlib
           make
           make install
           cd ..
