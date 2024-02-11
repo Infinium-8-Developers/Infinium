@@ -227,8 +227,8 @@ jobs:
     runs-on: macos-latest
     env:
       LABEL: osx
-      CC: /usr/local/opt/llvm@15/bin/clang-15
-      CXX: /usr/local/opt/llvm@15/bin/clang++-15
+      CC: /usr/local/opt/llvm@15/bin/clang
+      CXX: /usr/local/opt/llvm@15/bin/clang++
       CCACHE_DIR: $GITHUB_WORKSPACE/.ccache
     steps:
       - uses: actions/checkout@v2
@@ -237,7 +237,6 @@ jobs:
       - name: Dependencies
         run: |
           brew install --force ccache llvm@11
-          ls /usr/local/opt/llvm@15/bin
 
        # Fetch Dependencies
       - name: Install Boost
@@ -246,7 +245,7 @@ jobs:
           tar -xjf boost_1_82_0.tar.bz2
           cd boost_1_82_0
           ./bootstrap.sh --with-toolset=clang
-          ./b2 --toolset=clang-15 
+          ./b2 --toolset=clang
           cd ..
           
       # Install OpenSSH
