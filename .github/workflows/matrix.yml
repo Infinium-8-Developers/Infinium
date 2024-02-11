@@ -256,7 +256,7 @@ jobs:
           cd openssl-3.2.1/
           ./configure  --prefix=/home/runner/work/Infinium/Infinium/openssl --openssldir=/home/runner/work/Infinium/Infinium/openssl shared zlib
           make
-          make install
+          sudo make install
           cd ..
           
       - name: Retrieve ccache
