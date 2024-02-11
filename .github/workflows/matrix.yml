@@ -227,8 +227,8 @@ jobs:
     runs-on: macos-latest
     env:
       LABEL: osx
-      CC: /usr/local/opt/gcc@11/bin/gcc-11
-      CXX: /usr/local/opt/gcc@11/bin/g++-11
+      CC: /usr/local/opt/llvm@15/bin/clang-15
+      CXX: /usr/local/opt/llvm@15/bin/clang++-15
       CCACHE_DIR: $GITHUB_WORKSPACE/.ccache
     steps:
       - uses: actions/checkout@v2
@@ -236,14 +236,17 @@ jobs:
       # Fetch Dependencies
       - name: Dependencies
         run: |
+          ls /usr/local/opt/llvm@15/
+          brew install --force ccache llvm@8
+          ls /usr/local/opt/llvm@15/
+          ls /usr/local/opt/llvm@15/bin
           ls /usr/local/opt/
-          brew install --force ccache gcc@11 zlib
-          brew link zlib
+          
           curl -OL https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/boost_1_82_0.tar.bz2
           tar -xjf boost_1_82_0.tar.bz2
           cd boost_1_82_0
-          ./bootstrap.sh --with-toolset=gcc
-          ./b2 cxxflags=-std=c++17 --toolset=gcc-11 
+          ./bootstrap.sh --with-toolset=clang
+          ./b2 --toolset=clang-15 
           
           cd ..
 
