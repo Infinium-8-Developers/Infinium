@@ -2,11 +2,8 @@ cmake_minimum_required(VERSION 2.8.6)
 
 PROJECT(infinium)
 
-set(VERSION "1.0")
 
-#set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
-#set(CMAKE_EXE_LINKER_FLAGS_INIT "-pie")
-#set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lm -ldl -lpthread")
+set(VERSION "1.0")
 
 #  if(POLICY CMP0043)
 #    cmake_policy(SET CMP0043 OLD)
@@ -72,7 +69,7 @@ if(TESTNET)
   add_definitions(-DTESTNET)  
 endif()
 
-set(OPENSSL_USE_STATIC_LIBS TRUE)
+set(OPENSSL_USE_STATIC_LIBS TRUE) # link statically
 find_package(OpenSSL REQUIRED)
 
 if(DISABLE_TOR)
@@ -80,7 +77,6 @@ if(DISABLE_TOR)
   add_definitions(-DDISABLE_TOR)  
 endif()
 
-#find_package(ICU 66.1 REQUIRED COMPONENTS uc i18n data)
 
 set(STATIC ${MSVC} CACHE BOOL "Link libraries statically")
 if (UNIX AND NOT APPLE)
@@ -190,13 +186,12 @@ if(MSVC)
   set(Boost_USE_STATIC_LIBS ON)
 endif()
 
-if(STATIC) 
+if(STATIC)  
   set(Boost_USE_STATIC_LIBS ON)  
   set(Boost_USE_STATIC_RUNTIME ON)
 endif()
 
 message("CMAKE_SYSTEM_NAME: ${CMAKE_SYSTEM_NAME}")    
-
 if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
   set(Boost_LIBRARIES "libboost.a")
   #workaround for new XCode 12 policy for builds(now it includes a slice for the "arm64" when builds for simulator)
@@ -208,9 +203,9 @@ if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
   set(CMAKE_XCODE_ATTRIBUTE_VALID_ARCHS[sdk=iphonesimulator*] "${__iphonesimulator_archs}")
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Android")
   set(Boost_LIBRARY_DIRS "${Boost_LIBRARY_DIRS}/${CMAKE_ANDROID_ARCH_ABI}/")
-  set(Boost_LIBRARIES "${Boost_LIBRARY_DIRS}libboost_system.a;${Boost_LIBRARY_DIRS}libboost_filesystem.a;${Boost_LIBRARY_DIRS}libboost_thread.a;${Boost_LIBRARY_DIRS}libboost_timer.a;${Boost_LIBRARY_DIRS}libboost_date_time.a;${Boost_LIBRARY_DIRS}libboost_chrono.a;${Boost_LIBRARY_DIRS}libboost_regex.a;${Boost_LIBRARY_DIRS}libboost_serialization.a;${Boost_LIBRARY_DIRS}libboost_atomic.a;${Boost_LIBRARY_DIRS}libboost_program_options.a;${Boost_LIBRARY_DIRS}libboost_log.a")
+  set(Boost_LIBRARIES "${Boost_LIBRARY_DIRS}libboost_system.a;${Boost_LIBRARY_DIRS}libboost_filesystem.a;${Boost_LIBRARY_DIRS}libboost_thread.a;${Boost_LIBRARY_DIRS}libboost_timer.a;${Boost_LIBRARY_DIRS}libboost_date_time.a;${Boost_LIBRARY_DIRS}libboost_chrono.a;${Boost_LIBRARY_DIRS}libboost_regex.a;${Boost_LIBRARY_DIRS}libboost_serialization.a;${Boost_LIBRARY_DIRS}libboost_atomic.a;${Boost_LIBRARY_DIRS}libboost_program_options.a")
 else()
-  find_package(Boost 1.70 REQUIRED COMPONENTS system filesystem thread timer date_time chrono regex serialization atomic program_options locale log serialization)
+  find_package(Boost 1.70 REQUIRED COMPONENTS system filesystem thread timer date_time chrono regex serialization atomic program_options locale)
 endif()
 
 
@@ -219,26 +214,18 @@ message(STATUS "Boost: ${Boost_VERSION} from ${Boost_LIBRARY_DIRS}")
 
 
 include_directories(SYSTEM ${Boost_INCLUDE_DIRS} ${PROJECT_SOURCE_DIR}/contrib/ethereum/libethash)
-
-# set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lm -ldl -static-libgcc -static-libstdc++")
-
-#set(Boost_LIBRARIES "${Boost_LIBRARIES};/usr/lib/x86_64-linux-gnu/libm.a;/usr/lib/x86_64-linux-gnu/libdl.a")
-
 if(MINGW)
   set(Boost_LIBRARIES "${Boost_LIBRARIES};ws2_32;mswsock")
 elseif(NOT MSVC)
   if(NOT APPLE)
     set(Boost_LIBRARIES "${Boost_LIBRARIES};")
     if(STATIC) 
-      message("NOTICE: Including static ICU libraries")
+      message("NOTICE: Including static ICU libraries")  
+      set(Boost_LIBRARIES "${Boost_LIBRARIES};icui18n.a;icuuc.a;icudata.a;dl")
     endif()
   endif()
 endif()
 
-if(NOT MSVC)
-  set(Boost_LIBRARIES "${Boost_LIBRARIES};/usr/lib/x86_64-linux-gnu/libicui18n.a;/usr/lib/x86_64-linux-gnu/libicuuc.a;/usr/lib/x86_64-linux-gnu/libicudata.a") #;/usr/lib/x86_64-linux-gnu/libc.a;/usr/lib/gcc/x86_64-linux-gnu/9/libstdc++.a
-endif()
-      
 if(BUILD_GUI)
   cmake_minimum_required(VERSION 2.8.11)
   find_package(Qt5Widgets REQUIRED)  
