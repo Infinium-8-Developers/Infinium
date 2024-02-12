@@ -1,4 +1,4 @@
-name: Build
+name: Build GUI
 on:
   push:
   pull_request:
@@ -350,6 +350,9 @@ jobs:
 
       - name: Setup clcache
         run: pip install clcache
+        
+      - name: Download Submodules
+        run: git submodule sync && git submodule update
 
       - name: Retrieve clcache
         uses: actions/cache@v1
