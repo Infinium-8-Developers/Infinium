@@ -351,8 +351,10 @@ jobs:
       - name: Setup clcache
         run: pip install clcache
         
-      - name: Download Submodules
-        run: git submodule sync && git submodule update
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
 
       - name: Retrieve clcache
         uses: actions/cache@v1
