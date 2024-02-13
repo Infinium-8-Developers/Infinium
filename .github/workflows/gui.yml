@@ -410,7 +410,7 @@ jobs:
           rm -rf Infinium-${TAG}-gui
           mkdir Infinium-${TAG}-gui
           cp infinium.exe Infinium-${TAG}-gui/
-          D:/a/Infinium/Qt/5.15.2/msvc2019_64/bin/windeployqt.exe Infinium-${TAG}-gui/infinium.exe
+          D:/a/Infinium/Qt/5.12.12/msvc2017_64/bin/windeployqt.exe Infinium-${TAG}-gui/infinium.exe
           cp -r ../../../src/gui/qt-daemon/layout/html Infinium-${TAG}-gui/html       
           7z a Infinium-${TAG}-gui-${LABEL}.zip Infinium-${TAG}-gui/
 
