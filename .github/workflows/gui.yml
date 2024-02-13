@@ -368,10 +368,10 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
-          version: '5.15.2'
+          version: '5.12.12'
           host: 'windows'
           target: 'desktop'
-          arch: 'win64_msvc2019_64'
+          arch: 'win64_msvc2017_64'
           modules: 'debug_info qtcharts qtdatavis3d qtlottie qtnetworkauth qtpurchasing qtquick3d qtquicktimeline qtscript qtvirtualkeyboard qtwebengine qtwebglplugin'
 
       # Install boost
@@ -388,7 +388,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake -G "Visual Studio 17 2022" -A x64 -T host=x64 .. -DBUILD_GUI=ON -D CMAKE_PREFIX_PATH=D:\a\Infinium\Qt\5.15.2\msvc2019_64 -D BOOST_ROOT=C:/local/boost_1_82_0 -D BOOST_LIBRARYDIR="C:/local/boost_1_82_0/lib64-msvc-14.1"  -D OPENSSL_ROOT_DIR="C:/Program Files/OpenSSL" -D STATIC=OFF
+          cmake -G "Visual Studio 17 2022" -A x64 -T host=x64 .. -DBUILD_GUI=ON -D CMAKE_PREFIX_PATH=D:\a\Infinium\Qt\5.12.12\msvc2017_64 -D BOOST_ROOT=C:/local/boost_1_82_0 -D BOOST_LIBRARYDIR="C:/local/boost_1_82_0/lib64-msvc-14.1"  -D OPENSSL_ROOT_DIR="C:/Program Files/OpenSSL" -D STATIC=OFF
      
       # Build for Windows
       - name: Build
