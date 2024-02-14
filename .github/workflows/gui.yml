@@ -440,3 +440,4 @@ jobs:
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
         with:
           path: build/src/Release/Infinium-${{ github.sha }}-gui/setup_64.iss
+          options: /dBinariesPath=build/src/Release/Infinium-${{ github.sha }}-gui/ /o build/src/Release /fInfinium-${{ github.sha }}-Gui--${{ env.LABEL }}
