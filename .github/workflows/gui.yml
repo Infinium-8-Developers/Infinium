@@ -414,6 +414,7 @@ jobs:
           cp -r ../../../src/gui/qt-daemon/layout/html Infinium-${TAG}-gui/html       
           7z a Infinium-${TAG}-gui-${LABEL}.zip Infinium-${TAG}-gui/
           cp ../../../utils/buildings/windows/64bit/setup_64.iss Infinium-${TAG}-gui/
+          cp ../../../utils/buildings/windows/64bit/vc_redist.x64.exe Infinium-${TAG}-gui/
           dir Infinium-${TAG}-gui/
 
       # Upload to GH Release
@@ -440,4 +441,4 @@ jobs:
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
         with:
           path: build/src/Release/Infinium-${{ github.sha }}-gui/setup_64.iss
-          options: /O+ /dBinariesPath=build/src/Release/Infinium-${{ github.sha }}-gui/ /obuild/src/Release /fInfinium-${{ github.sha }}-Gui--${{ env.LABEL }}
+          options: /O+ /d BinariesPath=build/src/Release/Infinium-${{ github.sha }}-gui/ /o build/src/Release /f Infinium-${{ github.sha }}-Gui--${{ env.LABEL }}
