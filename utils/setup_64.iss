@@ -21,11 +21,11 @@ Compression=lzma
 SolidCompression=yes
 ChangesAssociations=yes
 ArchitecturesInstallIn64BitMode=x64
-WizardImageFile=../../../resources/installer_bg_164x313.bmp
-;WizardSmallImageFile=../../../resources/icon.bmp
+WizardImageFile=../../../../resources/installer_bg_164x313.bmp
+;WizardSmallImageFile=../../../../resources/icon.bmp
 PrivilegesRequired=poweruser
 ArchitecturesAllowed=x64
-;SetupIconFile=../../../resources/app.ico
+;SetupIconFile=../../../../resources/app.ico
 AppMutex=Infinium_instance
 UninstallDisplayIcon={app}\{#MyAppExeName}
 
@@ -54,9 +54,9 @@ Root: HKCR; Subkey: "Infinium\shell\open\command"; ValueType: string; ValueName:
 [Files]
 
 Source: "{#BinariesPath}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs ignoreversion overwritereadonly replacesameversion
-Source: "..\..\..\src\gui\qt-daemon\layout\html\*"; DestDir: "{app}\html"; Flags: ignoreversion recursesubdirs ignoreversion overwritereadonly replacesameversion
+Source: "../../../../src/gui/qt-daemon/layout/html/*"; DestDir: "{app}\html"; Flags: ignoreversion recursesubdirs ignoreversion overwritereadonly replacesameversion
 Source: "{#BinariesPath}\vc_redist.x64.exe"; DestDir: {tmp}; Flags: deleteafterinstall
-Source: "../../../resources/installer_bg_*.bmp"; Excludes: "*313.bmp"; Flags: dontcopy
+Source: "..\..\..\..\resources\installer_bg_*.bmp"; Excludes: "*313.bmp"; Flags: dontcopy
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -68,7 +68,7 @@ Name: "{userdesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 
 
 [Run]
-Filename: {tmp}\vc_redist.x64.exe; Parameters: "/install /quiet /norestart";  StatusMsg: Installing VC++ 2017 Redistributables...
+Filename: {app}\vc_redist.x64.exe; Parameters: "/install /quiet /norestart";  StatusMsg: Installing VC++ 2017 Redistributables...
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent shellexec
 
 [UninstallDelete]
