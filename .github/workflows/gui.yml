@@ -413,7 +413,7 @@ jobs:
           D:/a/Infinium/Qt/5.12.12/msvc2017_64/bin/windeployqt.exe Infinium-${TAG}-gui/infinium.exe
           cp -r ../../../src/gui/qt-daemon/layout/html Infinium-${TAG}-gui/html       
           7z a Infinium-${TAG}-gui-${LABEL}.zip Infinium-${TAG}-gui/
-          cp ../../../utils/setup_64.iss Infinium-${TAG}-gui/
+          cp ../../../utils/buildings/windows/64bit/setup_64.iss Infinium-${TAG}-gui/
           dir Infinium-${TAG}-gui/
 
       # Upload to GH Release
@@ -438,3 +438,5 @@ jobs:
       # Compile .ISS to .EXE Installer
       - name: Compile .ISS to .EXE Installer
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
+        with:
+          path: build/src/Release/Infinium-${{ github.sha }}-gui/setup_64.iss
