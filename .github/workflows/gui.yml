@@ -440,7 +440,7 @@ jobs:
         run: |
             cd build/src/Release
             dir 
-            cd build/src/Release/Infinium-${{ github.sha }}-gui
+            cd Infinium-${{ github.sha }}-gui
             dir
             
       # Compile .ISS to .EXE Installer
