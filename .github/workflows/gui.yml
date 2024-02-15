@@ -407,15 +407,15 @@ jobs:
         run: |
           if [[ "${TAG:5:4}" == "tags" ]]; then export TAG=${TAG:10}; else export TAG=${COMMIT_SHA}; fi
           cd build/src/Release
-          rm -rf Infinium-${TAG}-gui
-          mkdir Infinium-${TAG}-gui
-          cp infinium.exe Infinium-${TAG}-gui/
-          D:/a/Infinium/Qt/5.12.12/msvc2017_64/bin/windeployqt.exe Infinium-${TAG}-gui/infinium.exe
-          cp -r ../../../src/gui/qt-daemon/layout/html Infinium-${TAG}-gui/html       
-          7z a Infinium-${TAG}-gui-${LABEL}.zip Infinium-${TAG}-gui/
-          cp ../../../utils/buildings/windows/64bit/setup_64.iss Infinium-${TAG}-gui/
-          cp ../../../utils/buildings/windows/64bit/vc_redist.x64.exe Infinium-${TAG}-gui/
-          dir Infinium-${TAG}-gui/
+          rm -rf Infinium-Gui-${TAG}
+          mkdir Infinium-Gui-${TAG}
+          cp infinium.exe Infinium-Gui-${TAG}/
+          D:/a/Infinium/Qt/5.12.12/msvc2017_64/bin/windeployqt.exe Infinium-Gui-${TAG}/infinium.exe
+          cp -r ../../../src/gui/qt-daemon/layout/html Infinium-Gui-${TAG}/html       
+          7z a Infinium-Gui-${TAG}-${LABEL}.zip Infinium-Gui-${TAG}
+          cp ../../../utils/buildings/windows/64bit/setup_64.iss Infinium-Gui-${TAG}
+          cp ../../../utils/buildings/windows/64bit/vc_redist.x64.exe Infinium-Gui-${TAG}
+          dir Infinium-Gui-${TAG}
 
       # Upload to GH Release
       - name: Upload to GH Release
@@ -425,39 +425,39 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./build/src/Release/Infinium-${{ github.event.release.tag_name }}-gui-${{ env.LABEL }}.zip
-          asset_name: Infinium-${{ github.event.release.tag_name }}-gui-${{ env.LABEL }}.zip
+          asset_path: ./build/src/Release/Infinium-Gui-${{ github.event.release.tag_name }}-${{ env.LABEL }}.zip
+          asset_name: Infinium-Gui-${{ github.event.release.tag_name }}-${{ env.LABEL }}.zip
           asset_content_type: application/zip
 
       # Upload to GH Actions Artifacts
       - name: Upload To GH Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: Infinium-${{ github.sha }}-gui-${{ env.LABEL }}
-          path: ./build/src/Release/Infinium-${{ github.sha }}-gui   
+          name: Infinium-Gui-${{ github.sha }}-${{ env.LABEL }}
+          path: ./build/src/Release/Infinium-Gui-${{ github.sha }}  
             
       # Compile .ISS to .EXE Installer - No Release
       - name: Compile .ISS to .EXE Installer
         if: github.event_name != 'release'
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
         with:
-          path: build/src/Release/Infinium-${{ github.sha }}-gui/setup_64.iss
-          options: /O+ /DBinariesPath=..\Infinium-${{ github.sha }}-gui /O..\Infinium\build\src\Release /FInfinium-${{ github.sha }}-Gui-${{ env.LABEL }}
+          path: build/src/Release/Infinium-Gui-${{ github.sha }}/setup_64.iss
+          options: /O+ /DBinariesPath=..\Infinium-Gui-${{ github.sha }} /O..\Infinium\build\src\Release /FInfinium-Gui-${{ github.sha }}-${{ env.LABEL }}
       
       # Compile .ISS to .EXE Installer - Release
       - name: Compile .ISS to .EXE Installer
         if: github.event_name == 'release'
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
         with:
-          path: build/src/Release/Infinium-${{ github.event.release.tag_name }}-gui/setup_64.iss
-          options: /O+ /DBinariesPath=..\Infinium-${{ github.event.release.tag_name }}-gui /O..\Infinium\build\src\Release /FInfinium-${{ github.event.release.tag_name }}-Gui-${{ env.LABEL }}
+          path: build/src/Release/Infinium-Gui-${{ github.event.release.tag_name }}/setup_64.iss
+          options: /O+ /DBinariesPath=..\Infinium-Gui-${{ github.event.release.tag_name }} /O..\Infinium\build\src\Release /FInfinium-Gui-${{ github.event.release.tag_name }}-${{ env.LABEL }}
       
       # Upload to GH Actions Artifacts EXE
       - name: Upload To GH Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: Infinium-${{ github.sha }}-Gui-${{ env.LABEL }}.exe
-          path: ./build/src/Release/Infinium-${{ github.sha }}-Gui-${{ env.LABEL }}.exe
+          name: Infinium-Gui-${{ github.sha }}-${{ env.LABEL }}.exe
+          path: ./build/src/Release/Infinium-Gui-${{ github.sha }}-${{ env.LABEL }}.exe
 
       # Upload to GH Release EXE
       - name: Upload to GH Release
@@ -467,6 +467,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./build/src/Release/Infinium-${{ github.event.release.tag_name }}-Gui-${{ env.LABEL }}.exe
-          asset_name: Infinium-${{ github.event.release.tag_name }}-Gui-${{ env.LABEL }}.exe
+          asset_path: ./build/src/Release/Infinium-Gui-${{ github.event.release.tag_name }}-${{ env.LABEL }}.exe
+          asset_name: Infinium-Gui-${{ github.event.release.tag_name }}-${{ env.LABEL }}.exe
           asset_content_type: application/octet-stream
