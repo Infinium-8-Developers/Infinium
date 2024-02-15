@@ -455,5 +455,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Infinium-${{ github.sha }}-Gui-${{ env.LABEL }}.exe
-          path: ./build/src/Release/Infinium-${{ github.sha }}-Gui-${{ env.LABEL }}
-      
+          path: ./build/src/Release
