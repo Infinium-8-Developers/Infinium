@@ -440,5 +440,5 @@ jobs:
       - name: Compile .ISS to .EXE Installer
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
         with:
-          path: build/src/Release/Infinium-${{ github.sha }}-gui/setup_64.iss
-          options: /D BinariesPath=build\src\Release\Infinium-${{ github.sha }}-gui /O build\src\Release /F Infinium-${{ github.sha }}-Gui-${{ env.LABEL }}
+          path: build/src/Release/Infinium-${{ github.sha }}-gui
+          options: /DBinariesPath=..\Infinium-${{ github.sha }}-gui /O..\ /FInfinium-${{ github.sha }}-Gui-${{ env.LABEL }} setup_64.iss
