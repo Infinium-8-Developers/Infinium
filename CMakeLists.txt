@@ -5,14 +5,6 @@ PROJECT(infinium)
 
 set(VERSION "1.0")
 
-#  if(POLICY CMP0043)
-#    cmake_policy(SET CMP0043 OLD)
-#  endif()
-
-#  if(POLICY CMP0020)
-#    cmake_policy(SET CMP0020 OLD)
-#  endif()
-
 if(CMAKE_SYSTEM_NAME STREQUAL "iOS" OR CMAKE_SYSTEM_NAME STREQUAL "Android")
   add_definitions(-DMOBILE_WALLET_BUILD)
   if(CMAKE_SYSTEM_NAME STREQUAL "iOS" )   
