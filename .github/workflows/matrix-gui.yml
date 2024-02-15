@@ -106,10 +106,10 @@ jobs:
           cd build/src
           TARGETS="infiniumd connectivity_tool simplewallet"
           if [[ "${LABEL}" != "aarch64" ]]; then strip ${TARGETS}; fi
-          rm -rf Infinium-${TAG}
-          mkdir Infinium-${TAG}
-          cp ${TARGETS} Infinium-${TAG}/
-          tar cvfz Infinium-${TAG}-${LABEL}.tar.gz Infinium-${TAG}/
+          rm -rf Infinium-Gui-${TAG}
+          mkdir Infinium-Gui-${TAG}
+          cp ${TARGETS} Infinium-Gui-${TAG}/
+          tar cvfz Infinium-Gui-${TAG}-${LABEL}.tar.gz Infinium-Gui-${TAG}/
           ls -la
       # Upload to GH Release
       - name: Upload to GH Release
@@ -119,16 +119,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./build/src/Infinium-${{ github.event.release.tag_name }}-${{ env.LABEL }}.tar.gz
-          asset_name: Infinium-${{ github.event.release.tag_name }}-${{ env.LABEL }}.tar.gz
+          asset_path: ./build/src/Infinium-Gui-${{ github.event.release.tag_name }}-${{ env.LABEL }}.tar.gz
+          asset_name: Infinium-Gui-${{ github.event.release.tag_name }}-${{ env.LABEL }}.tar.gz
           asset_content_type: application/gzip
 
       # Upload to GH Actions Artifacts
       - name: Upload To GH Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: Infinium-${{ github.sha }}-${{ env.LABEL }}
-          path: ./build/src/Infinium-${{ github.sha }}   
+          name: Infinium-Gui-${{ github.sha }}-${{ env.LABEL }}
+          path: ./build/src/Infinium-Gui-${{ github.sha }}   
 
   ubuntu_now_build:
     name: ${{ matrix.build_name }}
@@ -220,10 +220,10 @@ jobs:
           cd build/src
           TARGETS="infiniumd connectivity_tool simplewallet"
           if [[ "${LABEL}" != "aarch64" ]]; then strip ${TARGETS}; fi
-          rm -rf Infinium-${TAG}
-          mkdir Infinium-${TAG}
-          cp ${TARGETS} Infinium-${TAG}/
-          tar cvfz Infinium-${TAG}-${LABEL}.tar.gz Infinium-${TAG}/
+          rm -rf Infinium-Gui-${TAG}
+          mkdir Infinium-Gui-${TAG}
+          cp ${TARGETS} Infinium-Gui-${TAG}/
+          tar cvfz Infinium-Gui-${TAG}-${LABEL}.tar.gz Infinium-Gui-${TAG}/
           ls -la
       # Upload to GH Release
       - name: Upload to GH Release
@@ -233,16 +233,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./build/src/Infinium-${{ github.event.release.tag_name }}-${{ env.LABEL }}.tar.gz
-          asset_name: Infinium-${{ github.event.release.tag_name }}-${{ env.LABEL }}.tar.gz
+          asset_path: ./build/src/Infinium-Gui-${{ github.event.release.tag_name }}-${{ env.LABEL }}.tar.gz
+          asset_name: Infinium-Gui-${{ github.event.release.tag_name }}-${{ env.LABEL }}.tar.gz
           asset_content_type: application/gzip
 
       # Upload to GH Actions Artifacts
       - name: Upload To GH Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: Infinium-${{ github.sha }}-${{ env.LABEL }}
-          path: ./build/src/Infinium-${{ github.sha }}
+          name: Infinium-Gui-${{ github.sha }}-${{ env.LABEL }}
+          path: ./build/src/Infinium-Gui-${{ github.sha }}
 
           
 
