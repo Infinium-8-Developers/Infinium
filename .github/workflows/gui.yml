@@ -435,13 +435,6 @@ jobs:
         with:
           name: Infinium-${{ github.sha }}-gui-${{ env.LABEL }}
           path: ./build/src/Release/Infinium-${{ github.sha }}-gui   
-      
-      - name: Test
-        run: |
-            cd build/src/Release
-            dir 
-            cd Infinium-${{ github.sha }}-gui
-            dir
             
       # Compile .ISS to .EXE Installer
       - name: Compile .ISS to .EXE Installer
@@ -450,9 +443,21 @@ jobs:
           path: build/src/Release/Infinium-${{ github.sha }}-gui/setup_64.iss
           options: /O+ /DBinariesPath=..\Infinium-${{ github.sha }}-gui /O..\Infinium\build\src\Release /FInfinium-${{ github.sha }}-Gui-${{ env.LABEL }}
       
-      # Upload to GH Actions Artifacts
+      # Upload to GH Actions Artifacts EXE
       - name: Upload To GH Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: Infinium-${{ github.sha }}-Gui-${{ env.LABEL }}.exe
           path: ./build/src/Release/Infinium-${{ github.sha }}-Gui-${{ env.LABEL }}.exe
+
+      # Upload to GH Release EXE
+      - name: Upload to GH Release
+        if: github.event_name == 'release'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./build/src/Release/Infinium-${{ github.event.release.tag_name }}-Gui-${{ env.LABEL }}.exe
+          asset_name: Infinium-${{ github.event.release.tag_name }}-Gui-${{ env.LABEL }}.exe
+          asset_content_type: application/octet-stream
