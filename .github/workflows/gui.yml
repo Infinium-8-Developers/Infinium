@@ -435,10 +435,17 @@ jobs:
         with:
           name: Infinium-${{ github.sha }}-gui-${{ env.LABEL }}
           path: ./build/src/Release/Infinium-${{ github.sha }}-gui   
-
+      
+      - name: Test
+        run: |
+            cd build/src/Release
+            dir 
+            cd build/src/Release/Infinium-${{ github.sha }}-gui
+            dir
+            
       # Compile .ISS to .EXE Installer
       - name: Compile .ISS to .EXE Installer
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
         with:
-          path: build/src/Release/Infinium-${{ github.sha }}-gui
+          path: build/src/Release/Infinium-${{ github.sha }}-gui/setup_64.iss
           options: /DBinariesPath=..\Infinium-${{ github.sha }}-gui /O..\ /FInfinium-${{ github.sha }}-Gui-${{ env.LABEL }} setup_64.iss
