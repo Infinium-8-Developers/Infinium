@@ -436,12 +436,21 @@ jobs:
           name: Infinium-${{ github.sha }}-gui-${{ env.LABEL }}
           path: ./build/src/Release/Infinium-${{ github.sha }}-gui   
             
-      # Compile .ISS to .EXE Installer
+      # Compile .ISS to .EXE Installer - No Release
       - name: Compile .ISS to .EXE Installer
+        if: github.event_name != 'release'
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
         with:
           path: build/src/Release/Infinium-${{ github.sha }}-gui/setup_64.iss
           options: /O+ /DBinariesPath=..\Infinium-${{ github.sha }}-gui /O..\Infinium\build\src\Release /FInfinium-${{ github.sha }}-Gui-${{ env.LABEL }}
+      
+      # Compile .ISS to .EXE Installer - Release
+      - name: Compile .ISS to .EXE Installer
+        if: github.event_name == 'release'
+        uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
+        with:
+          path: build/src/Release/Infinium-${{ github.event.release.tag_name }}-gui/setup_64.iss
+          options: /O+ /DBinariesPath=..\Infinium-${{ github.event.release.tag_name }}-gui /O..\Infinium\build\src\Release /FInfinium-${{ github.event.release.tag_name }}-Gui-${{ env.LABEL }}
       
       # Upload to GH Actions Artifacts EXE
       - name: Upload To GH Artifacts
