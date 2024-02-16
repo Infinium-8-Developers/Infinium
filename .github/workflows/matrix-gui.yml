@@ -290,8 +290,7 @@ jobs:
         run: |
           brew install --force ccache llvm@11
           ls /usr/local/opt/llvm@11/bin
-          xcode-select --print-path
-          sudo xcode-select -switch /Applications/Xcode_14.2.app
+          ls /Applications/Xcode_14.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
 
        # Fetch Dependencies
       - name: Install Boost
