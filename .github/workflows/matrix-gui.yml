@@ -290,6 +290,7 @@ jobs:
         run: |
           brew install --force ccache llvm@11
           ls /usr/local/opt/llvm@11/bin
+          xcode-select --print-path
 
        # Fetch Dependencies
       - name: Install Boost
