@@ -43,8 +43,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # Fetch Dependencies
-      - name: Dependencies
+      # Checkout repository and submodules
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive   
+
+      # Install Boost
+      - name: Install Boost
         run: |
           sudo apt update
           sudo apt upgrade
@@ -55,23 +61,24 @@ jobs:
           ./bootstrap.sh --with-libraries=system,filesystem,thread,date_time,chrono,regex,serialization,atomic,program_options,locale,timer,log
           ./b2
           cd ..
+
+      # Install OpenSSH
+      - name: Install OpenSSH
+        run: |
           curl -OL https://www.openssl.org/source/openssl-1.1.1n.tar.gz
           tar xaf openssl-1.1.1n.tar.gz 
           cd openssl-1.1.1n/
           ./config --prefix=/home/runner/work/Infinium/Infinium/openssl --openssldir=/home/runner/work/Infinium/Infinium/openssl shared zlib
           make
           make install
-          cd ..
-          
+          cd ..   
+
+      # Setup Ccache    
       - name: Setup ccache
         run: |
           sudo apt install ccache
 
-      - name: Checkout repository and submodules
-        uses: actions/checkout@v2
-        with:
-          submodules: recursive
-
+      # Install Qt
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
@@ -82,6 +89,7 @@ jobs:
           arch: 'gcc_64'
           modules: 'debug_info qtcharts qtdatavis3d qtnetworkauth qtpurchasing qtscript qtvirtualkeyboard qtwebengine qtwebglplugin'
           
+      # Retrieve Ccache   
       - name: Retrieve ccache
         uses: actions/cache@v1
         with:
@@ -96,11 +104,13 @@ jobs:
         run: |
           mkdir build && cd build
           cmake  -D BOOST_ROOT=/home/runner/work/Infinium/Infinium/boost_1_70_0 -D OPENSSL_ROOT_DIR=/home/runner/work/Infinium/Infinium/openssl -D CMAKE_PREFIX_PATH=/home/runner/work/Infinium/Qt/5.12.12/gcc_64 -D BUILD_GUI=ON -D STATIC=true -D CMAKE_BUILD_TYPE=Release -D BUILD_TESTS=OFF ..
+      
       # Build for linux
       - name: Build
         run: |
           cd build
           make 
+      
       # Prepare for deploy
       - name: Prepare for Deploy
         id: before_deploy
@@ -116,6 +126,7 @@ jobs:
           cp ${TARGETS} Infinium-Gui-${TAG}/
           tar cvfz Infinium-Gui-${TAG}-${LABEL}.tar.gz Infinium-Gui-${TAG}/
           ls -la
+      
       # Upload to GH Release
       - name: Upload to GH Release
         if: github.event_name == 'release' && matrix.deployable
@@ -162,6 +173,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive   
+
       # Fetch Dependencies
       - name: Dependencies
         run: |
@@ -185,12 +201,7 @@ jobs:
       - name: Setup ccache
         run: |
           sudo apt install ccache
-
-      - name: Checkout repository and submodules
-        uses: actions/checkout@v2
-        with:
-          submodules: recursive   
-          
+         
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
@@ -268,6 +279,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # Checkout repository and submodules
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+     
       # Fetch Dependencies
       - name: Dependencies
         run: |
@@ -283,18 +300,15 @@ jobs:
           ./bootstrap.sh 
           ./b2 
           cd ..
-          
+
+      # Retrieve ccache    
       - name: Retrieve ccache
         uses: actions/cache@v1
         with:
           path: .ccache
           key: ccache-osx
 
-      - name: Checkout repository and submodules
-        uses: actions/checkout@v2
-        with:
-          submodules: recursive
-
+       # Install Qt
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
