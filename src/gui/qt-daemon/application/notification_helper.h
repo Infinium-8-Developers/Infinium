@@ -7,8 +7,12 @@
 #pragma once
 #include <string>
 #include "epee/include/misc_log_ex.h"
-#include <Foundation/NSUserNotification.h>
-#include <Foundation/Foundation.h>
+
+#if defined(__APPLE__)
+  {
+    #include <Foundation/Foundation.h>
+  }
+#endif
 
 struct notification_helper
 {
