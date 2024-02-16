@@ -1,4 +1,4 @@
-name: Build
+name: Build Cli
 on:
   push:
   pull_request:
