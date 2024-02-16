@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Name=Infinium
+GenericName=Infinium
+Comment=Privacy blockchain
+Icon=Infinium
+Terminal=true
+Type=Application
+Categories=Qt;Utility;
+Name[en_US]=Infinium
+MimeType=x-scheme-handler/Infinium;
+
