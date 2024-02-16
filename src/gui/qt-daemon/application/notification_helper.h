@@ -7,6 +7,9 @@
 #pragma once
 #include <string>
 #include "epee/include/misc_log_ex.h"
+#include <Foundation/NSString.h>
+#include <Foundation/NSUserNotification.h>
+#include <Foundation/Foundation.h>
 
 struct notification_helper
 {
