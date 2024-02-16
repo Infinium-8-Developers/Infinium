@@ -1,4 +1,3 @@
-#include <Foundation/Foundation.h>
 #include "notification_helper.h"
 #include <Foundation/NSString.h>
 #include <Foundation/NSUserNotification.h>
