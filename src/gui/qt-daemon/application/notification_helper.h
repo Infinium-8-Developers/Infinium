@@ -10,7 +10,7 @@
 
 #if defined(__APPLE__)
   {
-    #include <Foundation/Foundation.h>
+    #include <Foundation/NSString.h>
   }
 #endif
 
