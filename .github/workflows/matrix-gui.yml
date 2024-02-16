@@ -289,6 +289,8 @@ jobs:
       - name: Dependencies
         run: |
           brew install --force ccache llvm@11
+          sudo xcodebuild -runFirstLaunch
+          sudo xcodebuild -showsdks
           ls /usr/local/opt/llvm@11/bin
           ls /Applications/Xcode_14.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
 
