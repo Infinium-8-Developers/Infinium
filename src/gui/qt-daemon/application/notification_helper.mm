@@ -1,7 +1,7 @@
 #include "notification_helper.h"
 #import <Foundation/Foundation.h>
-#import <AppKit/NSUserNotification.h>
-#import <AppKit/NSUserNotificationCenter.h>
+#import <Foundation/NSUserNotification.h>
+#import <Foundation/NSUserNotificationCenter.h>
 
 void notification_helper::show(const std::string& title, const std::string& message)
 {
