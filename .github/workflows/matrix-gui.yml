@@ -244,8 +244,8 @@ jobs:
           rm -rf Infinium-Gui-${TAG}
           mkdir Infinium-Gui-${TAG}
           cp ${TARGETS} Infinium-Gui-${TAG}/
-          cp -r ../../../src/gui/qt-daemon/layout/html Infinium-Gui-${TAG}/html
-          cp ../../../utils/buildings/linux/64bit/Infinium.sh Infinium-Gui-${TAG}/
+          cp -r ../../src/gui/qt-daemon/layout/html Infinium-Gui-${TAG}/html
+          cp ../../utils/buildings/linux/64bit/Infinium.sh Infinium-Gui-${TAG}/
           chmod 777 Infinium-Gui-${TAG}/Infinium.sh
           mkdir Infinium-Gui-${TAG}/lib
           ls /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib
