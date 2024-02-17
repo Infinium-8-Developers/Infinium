@@ -244,8 +244,15 @@ jobs:
           rm -rf Infinium-Gui-${TAG}
           mkdir Infinium-Gui-${TAG}
           cp ${TARGETS} Infinium-Gui-${TAG}/
+          cp -r ../../../src/gui/qt-daemon/layout/html Infinium-Gui-${TAG}/html
+          cp ../../../utils/buildings/linux/64bit/Infinium.sh Infinium-Gui-${TAG}/
+          chmod 777 Infinium-Gui-${TAG}/Infinium.sh
+          mkdir Infinium-Gui-${TAG}/lib
+          ls /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib
+          ls /home/runner/work/Infinium/Qt/5.12.12/gcc_64/libexec
+          ls /home/runner/work/Infinium/Qt/5.12.12/gcc_64/resources
           tar cvfz Infinium-Gui-${TAG}-${LABEL}.tar.gz Infinium-Gui-${TAG}/
-          ls -la
+          
       # Upload to GH Release
       - name: Upload to GH Release
         if: github.event_name == 'release' && matrix.deployable
@@ -293,6 +300,7 @@ jobs:
           sudo xcodebuild -showsdks
           ls /usr/local/opt/llvm@11/bin
           ls /Applications/Xcode_14.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
+          brew doctor
 
        # Fetch Dependencies
       - name: Install Boost
@@ -448,7 +456,6 @@ jobs:
           7z a Infinium-Gui-${TAG}-${LABEL}.zip Infinium-Gui-${TAG}
           cp ../../../utils/buildings/windows/64bit/setup_64.iss Infinium-Gui-${TAG}
           cp ../../../utils/buildings/windows/64bit/vc_redist.x64.exe Infinium-Gui-${TAG}
-          dir Infinium-Gui-${TAG}
 
       # Upload to GH Release
       - name: Upload to GH Release
