@@ -103,7 +103,7 @@ jobs:
           CXX: ${{ matrix.cxx }}
         run: |
           mkdir build && cd build
-          cmake  -D BOOST_ROOT=/home/runner/work/Infinium/Infinium/boost_1_70_0 -D OPENSSL_ROOT_DIR=/home/runner/work/Infinium/Infinium/openssl -D CMAKE_PREFIX_PATH=/home/runner/work/Infinium/Qt/5.12.12/gcc_64 -D BUILD_GUI=ON -D STATIC=true -D CMAKE_BUILD_TYPE=Release -D BUILD_TESTS=OFF ..
+          cmake  -D BOOST_ROOT=/home/runner/work/Infinium/Infinium/boost_1_70_0 -D OPENSSL_ROOT_DIR=/home/runner/work/Infinium/Infinium/openssl -D CMAKE_PREFIX_PATH=/home/runner/work/Infinium/Qt/5.12.12/gcc_64 -D BUILD_GUI=ON -D CMAKE_BUILD_TYPE=Release -D BUILD_TESTS=OFF ..
       
       # Build for linux
       - name: Build
@@ -124,8 +124,44 @@ jobs:
           rm -rf Infinium-Gui-${TAG}
           mkdir Infinium-Gui-${TAG}
           cp ${TARGETS} Infinium-Gui-${TAG}/
+          cp -r ../../src/gui/qt-daemon/layout/html Infinium-Gui-${TAG}/html
+          cp ../../utils/buildings/linux/64bit/Infinium.sh Infinium-Gui-${TAG}/
+          cp ../../utils/buildings/linux/64bit/Infinium.desktop Infinium-Gui-${TAG}/
+          chmod 777 Infinium-Gui-${TAG}/Infinium.desktop
+          chmod 777 Infinium-Gui-${TAG}/Infinium.sh
+          mkdir Infinium-Gui-${TAG}/lib
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib/libicudata.so.56 Infinium-Gui-${TAG}/lib/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib/libicui18n.so.56 Infinium-Gui-${TAG}/lib/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib/libicuuc.so.56 Infinium-Gui-${TAG}/lib/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib/libQt5Core.so.5 Infinium-Gui-${TAG}/lib/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib/libQt5DBus.so.5 Infinium-Gui-${TAG}/lib/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib/libQt5Gui.so.5 Infinium-Gui-${TAG}/lib/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib/libQt5Network.so.5 Infinium-Gui-${TAG}/lib/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib/libQt5OpenGL.so.5 Infinium-Gui-${TAG}/lib/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib/libQt5Positioning.so.5 Infinium-Gui-${TAG}/lib/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib/libQt5PrintSupport.so.5 Infinium-Gui-${TAG}/lib/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib/libQt5Qml.so.5 Infinium-Gui-${TAG}/lib/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib/libQt5Quick.so.5 Infinium-Gui-${TAG}/lib/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib/libQt5Sensors.so.5 Infinium-Gui-${TAG}/lib/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib/libQt5Sql.so.5 Infinium-Gui-${TAG}/lib/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib/libQt5Widgets.so.5 Infinium-Gui-${TAG}/lib/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib/libQt5WebEngine.so.5 Infinium-Gui-${TAG}/lib/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib/libQt5WebEngineCore.so.5 Infinium-Gui-${TAG}/lib/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib/libQt5WebEngineWidgets.so.5 Infinium-Gui-${TAG}/lib/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib/libQt5WebChannel.so.5 Infinium-Gui-${TAG}/lib/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib/libQt5XcbQpa.so.5 Infinium-Gui-${TAG}/lib/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib/libQt5QuickWidgets.so.5 Infinium-Gui-${TAG}/lib/  
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/libexec/QtWebEngineProcess Infinium-Gui-${TAG}/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/resources/qtwebengine_resources.pak Infinium-Gui-${TAG}/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/resources/qtwebengine_resources_100p.pak Infinium-Gui-${TAG}/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/resources/qtwebengine_resources_200p.pak Infinium-Gui-${TAG}/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/resources/icudtl.dat Infinium-Gui-${TAG}/
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/resources/qtwebengine_devtools_resources.pak Infinium-Gui-${TAG}/
+          mkdir Infinium-Gui-${TAG}/lib/platforms
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/plugins/platforms/libqxcb.so Infinium-Gui-${TAG}/lib/platforms/
+          mkdir Infinium-Gui-${TAG}/xcbglintegrations
+          cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/plugins/xcbglintegrations/libqxcb-glx-integration.so Infinium-Gui-${TAG}/xcbglintegrations
           tar cvfz Infinium-Gui-${TAG}-${LABEL}.tar.gz Infinium-Gui-${TAG}/
-          ls -la
       
       # Upload to GH Release
       - name: Upload to GH Release
@@ -225,7 +261,7 @@ jobs:
           CXX: ${{ matrix.cxx }}
         run: |
           mkdir build && cd build
-          cmake  -D BOOST_ROOT=/home/runner/work/Infinium/Infinium/boost_1_76_0 -D OPENSSL_ROOT_DIR=/home/runner/work/Infinium/Infinium/openssl -D CMAKE_PREFIX_PATH=/home/runner/work/Infinium/Qt/5.12.12/gcc_64 -D BUILD_GUI=ON -D STATIC=true -D CMAKE_BUILD_TYPE=Release -D BUILD_TESTS=OFF ..
+          cmake  -D BOOST_ROOT=/home/runner/work/Infinium/Infinium/boost_1_76_0 -D OPENSSL_ROOT_DIR=/home/runner/work/Infinium/Infinium/openssl -D CMAKE_PREFIX_PATH=/home/runner/work/Infinium/Qt/5.12.12/gcc_64 -D BUILD_GUI=ON -D CMAKE_BUILD_TYPE=Release -D BUILD_TESTS=OFF ..
       # Build for linux
       - name: Build
         run: |
@@ -246,6 +282,8 @@ jobs:
           cp ${TARGETS} Infinium-Gui-${TAG}/
           cp -r ../../src/gui/qt-daemon/layout/html Infinium-Gui-${TAG}/html
           cp ../../utils/buildings/linux/64bit/Infinium.sh Infinium-Gui-${TAG}/
+          cp ../../utils/buildings/linux/64bit/Infinium.desktop Infinium-Gui-${TAG}/
+          chmod 777 Infinium-Gui-${TAG}/Infinium.desktop
           chmod 777 Infinium-Gui-${TAG}/Infinium.sh
           mkdir Infinium-Gui-${TAG}/lib
           cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/lib/libicudata.so.56 Infinium-Gui-${TAG}/lib/
