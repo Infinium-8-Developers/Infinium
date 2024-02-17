@@ -1,5 +1,4 @@
 #include "notification_helper.h"
-#include <Foundation/NSString.h>
 #include <Foundation/NSUserNotification.h>
 
 void notification_helper::show(const std::string& title, const std::string& message)
