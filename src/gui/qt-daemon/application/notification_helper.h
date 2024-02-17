@@ -2,21 +2,12 @@
 #include <string>
 #include "epee/include/misc_log_ex.h"
 
-#if defined(__APPLE__)
-    #include <Foundation/Foundation.h>
-#endif
-
 struct notification_helper
 {
     static void show(const std::string& title, const std::string& message);
 };
 
-#ifdef __APPLE__
-void notification_helper::show(const std::string& title, const std::string& message)
-{
-
-}
-#else
+#if !defined(__APPLE__)
 void notification_helper::show(const std::string& title, const std::string& message)
 {
     // Implementación para otras plataformas
