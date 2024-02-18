@@ -9,6 +9,7 @@ env:
   TAG: ${{ github.ref }}
 
 jobs:
+
 # Common Build matrix for builds on Ubuntu Lasted VM       
   ubuntu_build:
     name: ${{ matrix.build_name }}
@@ -16,6 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+      
         # Add more compilers here if you need them
         build_name: ['Ubuntu 20.04 - GCC 9', 'Ubuntu 20.04 - GCC 10', 'Ubuntu 20.04 - GCC 11']
         include:
@@ -103,7 +105,7 @@ jobs:
           CXX: ${{ matrix.cxx }}
         run: |
           mkdir build && cd build
-          cmake  -D BOOST_ROOT=/home/runner/work/Infinium/Infinium/boost_1_70_0 -D OPENSSL_ROOT_DIR=/home/runner/work/Infinium/Infinium/openssl -D CMAKE_PREFIX_PATH=/home/runner/work/Infinium/Qt/5.12.12/gcc_64 -D BUILD_GUI=ON -D CMAKE_BUILD_TYPE=Release -D BUILD_TESTS=OFF ..
+          cmake -D STATIC=TRUE -D BOOST_ROOT=/home/runner/work/Infinium/Infinium/boost_1_70_0 -D OPENSSL_ROOT_DIR=/home/runner/work/Infinium/Infinium/openssl -D CMAKE_PREFIX_PATH=/home/runner/work/Infinium/Qt/5.12.12/gcc_64 -D BUILD_GUI=ON -D CMAKE_BUILD_TYPE=Release -D BUILD_TESTS=OFF ..
       
       # Build for linux
       - name: Build
@@ -182,12 +184,15 @@ jobs:
           name: Infinium-Gui-${{ github.sha }}-${{ env.LABEL }}
           path: ./build/src/Infinium-Gui-${{ github.sha }}   
 
+
+
   ubuntu_now_build:
     name: ${{ matrix.build_name }}
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
+      
         # Add more compilers here if you need them
         build_name: ['Ubuntu 22.04 - GCC 11', 'Ubuntu 22.04 - GCC 12']
         include:
@@ -254,19 +259,21 @@ jobs:
           path: .ccache
           key: ccache-${{ matrix.label }}     
      
-     # Configure the project with cmake
+      # Configure the project with cmake
       - name: Configure
         env:
           CC: ${{ matrix.cc }}
           CXX: ${{ matrix.cxx }}
         run: |
           mkdir build && cd build
-          cmake  -D BOOST_ROOT=/home/runner/work/Infinium/Infinium/boost_1_76_0 -D OPENSSL_ROOT_DIR=/home/runner/work/Infinium/Infinium/openssl -D CMAKE_PREFIX_PATH=/home/runner/work/Infinium/Qt/5.12.12/gcc_64 -D BUILD_GUI=ON -D CMAKE_BUILD_TYPE=Release -D BUILD_TESTS=OFF ..
+          cmake -D STATIC=TRUE -D BOOST_ROOT=/home/runner/work/Infinium/Infinium/boost_1_76_0 -D OPENSSL_ROOT_DIR=/home/runner/work/Infinium/Infinium/openssl -D CMAKE_PREFIX_PATH=/home/runner/work/Infinium/Qt/5.12.12/gcc_64 -D BUILD_GUI=ON -D CMAKE_BUILD_TYPE=Release -D BUILD_TESTS=OFF ..
+      
       # Build for linux
       - name: Build
         run: |
           cd build
           make 
+          
       # Prepare for deploy
       - name: Prepare for Deploy
         id: before_deploy
@@ -362,14 +369,10 @@ jobs:
       - name: Dependencies
         run: |
           brew install --force ccache llvm@11
-          sudo xcodebuild -runFirstLaunch
-          sudo xcodebuild -showsdks
-          ls /usr/local/opt/llvm@11/bin
-          ls /Applications/Xcode_14.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
-          brew doctor
-          brew cleanup
+          brew untap homebrew/cask
+          brew untap homebrew/core
 
-       # Fetch Dependencies
+       # Install Boost
       - name: Install Boost
         run: |    
           curl -OL https://boostorg.jfrog.io/artifactory/main/release/1.80.0/source/boost_1_80_0.tar.bz2
@@ -456,23 +459,28 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # Install Clcache
       - name: Setup clcache
         run: pip install clcache
-        
+
+      # Checkout repository and submodules  
       - name: Checkout repository and submodules
         uses: actions/checkout@v2
         with:
           submodules: recursive
 
+      # Retrive Clcache
       - name: Retrieve clcache
         uses: actions/cache@v1
         with:
           path: clcache
           key: clcache-windows
 
+      # Install OpenSSL
       - name: Install OpenSSL
         run: choco install openssh
 
+      # Install QT
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
