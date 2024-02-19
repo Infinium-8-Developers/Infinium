@@ -307,6 +307,10 @@ jobs:
           COMMIT_SHA: ${{ github.sha }}
         run: |
           if [[ "${TAG:5:4}" == "tags" ]]; then export TAG=${TAG:10}; else export TAG=${COMMIT_SHA}; fi
+          prj_root=$(pwd)
+          
+          echo Infinium GUI Tar.Gz
+          
           cd build/src
           TARGETS="infiniumd connectivity_tool simplewallet infinium"
           if [[ "${LABEL}" != "aarch64" ]]; then strip ${TARGETS}; fi
@@ -351,6 +355,23 @@ jobs:
           mkdir Infinium-Gui-${TAG}/xcbglintegrations
           cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/plugins/xcbglintegrations/libqxcb-glx-integration.so Infinium-Gui-${TAG}/xcbglintegrations
           tar cvfz Infinium-Gui-${TAG}-${LABEL}.tar.gz Infinium-Gui-${TAG}/
+          
+          echo Infinium GUI AppData
+          
+          rm -rf Infinium-GUI-${TAG}
+          mkdir Infinium-GUI-${TAG}
+          mkdir -p Infinium-GUI-${TAG}/usr/bin
+          mkdir -p Infinium-GUI-${TAG}/usr/lib
+          mkdir -p Infinium-GUI-${TAG}/usr/share/applications
+          mkdir -p Infinium-GUI-${TAG}/usr/share/icons/hicolor/scalable/apps
+          mkdir -p Infinium-GUI-${TAG}/usr/share/icons/hicolor/256x256/apps
+          cp -r ../../src/gui/qt-daemon/layout/html Infinium-GUI-${TAG}/usr/bin/
+          cp ${TARGETS} Infinium-GUI-${TAG}/usr/bin/       
+          cp ../../utils/buildings/linux/64bit/Infinium.desktop Infinium-GUI-${TAG}/usr/share/applications/Infinium.desktop
+          cp ../../resources/app_icon.svg Infinium-GUI-${TAG}/usr/share/icons/hicolor/scalable/apps/Infinium.svg
+          cp ../../resources/app_icon_256.png Infinium-GUI-${TAG}/usr/share/icons/hicolor/256x256/apps/Infinium.png
+          echo "Exec=$prj_root/build/src/Infinium-GUI-${TAG}/usr/bin/infinium" >> Infinium-GUI-${TAG}/usr/share/applications/Infinium.desktop
+          ls -la Infinium-GUI-${TAG}
           
       # Upload to GH Release
       - name: Upload to GH Release
