@@ -90,6 +90,10 @@ jobs:
           target: 'desktop'
           arch: 'gcc_64'
           modules: 'debug_info qtcharts qtdatavis3d qtnetworkauth qtpurchasing qtscript qtvirtualkeyboard qtwebengine qtwebglplugin'
+
+      # Install LinuxDeployQt
+      - name: Install LinuxDeployQt
+        uses: miurahr/install-linuxdeployqt-action@v0
           
       # Retrieve Ccache   
       - name: Retrieve ccache
@@ -213,7 +217,8 @@ jobs:
       LABEL: ${{ matrix.label }}
     steps:
       - uses: actions/checkout@v2
-
+      
+      # Checkout repository and submodules
       - name: Checkout repository and submodules
         uses: actions/checkout@v2
         with:
@@ -225,12 +230,20 @@ jobs:
           sudo apt update
           sudo apt upgrade
           sudo apt-get install -y curl build-essential python3-dev autotools-dev libicu-dev libbz2-dev cmake git screen checkinstall zlib1g-dev ${{ matrix.package_name }}
+     
+      # Install Boost
+      - name: Install Boost
+        run: |
           curl -OL https://boostorg.jfrog.io/artifactory/main/release/1.76.0/source/boost_1_76_0.tar.bz2
           tar -xjf boost_1_76_0.tar.bz2
           cd boost_1_76_0
           ./bootstrap.sh --with-libraries=system,filesystem,thread,date_time,chrono,regex,serialization,atomic,program_options,locale,timer,log
           ./b2
           cd ..
+          
+      # Install OpenSSL
+      - name: Install OpenSSL
+        run: |
           curl -OL https://www.openssl.org/source/openssl-1.1.1n.tar.gz
           tar xaf openssl-1.1.1n.tar.gz 
           cd openssl-1.1.1n/
@@ -238,11 +251,13 @@ jobs:
           make
           make install
           cd ..
-          
+
+      # Install Ccache
       - name: Setup ccache
         run: |
           sudo apt install ccache
-         
+
+      # Install Qt   
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
@@ -252,7 +267,12 @@ jobs:
           target: 'desktop'
           arch: 'gcc_64'
           modules: 'debug_info qtcharts qtdatavis3d qtnetworkauth qtpurchasing qtscript qtvirtualkeyboard qtwebengine qtwebglplugin'
-          
+      
+      # Install LinuxDeployQt
+      - name: Install LinuxDeployQt
+        uses: miurahr/install-linuxdeployqt-action@v0
+        
+      # Retrieve Ccache     
       - name: Retrieve ccache
         uses: actions/cache@v1
         with:
