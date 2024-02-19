@@ -90,12 +90,6 @@ jobs:
           target: 'desktop'
           arch: 'gcc_64'
           modules: 'debug_info qtcharts qtdatavis3d qtnetworkauth qtpurchasing qtscript qtvirtualkeyboard qtwebengine qtwebglplugin'
-
-      # Install LinuxDeployQt
-      - name: Install LinuxDeploy
-        uses: miurahr/install-linuxdeploy-action@v1
-        with:
-          plugins: qt appimage
           
       # Retrieve Ccache   
       - name: Retrieve ccache
@@ -118,6 +112,13 @@ jobs:
         run: |
           cd build
           make 
+
+      # Install LinuxDeployQt
+      - name: Install LinuxDeploy
+        uses: miurahr/install-linuxdeploy-action@v1
+        with:
+          plugins: qt appimage
+          dir: ${{ github.workspace }}/build/src
       
       # Prepare for deploy
       - name: Prepare for Deploy
@@ -269,12 +270,6 @@ jobs:
           target: 'desktop'
           arch: 'gcc_64'
           modules: 'debug_info qtcharts qtdatavis3d qtnetworkauth qtpurchasing qtscript qtvirtualkeyboard qtwebengine qtwebglplugin'
-      
-      # Install LinuxDeployQt
-      - name: Install LinuxDeploy
-        uses: miurahr/install-linuxdeploy-action@v1
-        with:
-          plugins: qt appimage
         
       # Retrieve Ccache     
       - name: Retrieve ccache
@@ -296,7 +291,14 @@ jobs:
       - name: Build
         run: |
           cd build
-          make 
+          make
+
+      # Install LinuxDeployQt
+      - name: Install LinuxDeploy
+        uses: miurahr/install-linuxdeploy-action@v1
+        with:
+          plugins: qt appimage
+          dir: ${{ github.workspace }}/build/src    
           
       # Prepare for deploy
       - name: Prepare for Deploy
