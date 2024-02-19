@@ -92,8 +92,10 @@ jobs:
           modules: 'debug_info qtcharts qtdatavis3d qtnetworkauth qtpurchasing qtscript qtvirtualkeyboard qtwebengine qtwebglplugin'
 
       # Install LinuxDeployQt
-      - name: Install LinuxDeployQt
-        uses: miurahr/install-linuxdeployqt-action@v1.7.0
+      - name: Install LinuxDeploy
+        uses: miurahr/install-linuxdeploy-action@v1
+        with:
+          plugins: qt appimage
           
       # Retrieve Ccache   
       - name: Retrieve ccache
@@ -269,8 +271,10 @@ jobs:
           modules: 'debug_info qtcharts qtdatavis3d qtnetworkauth qtpurchasing qtscript qtvirtualkeyboard qtwebengine qtwebglplugin'
       
       # Install LinuxDeployQt
-      - name: Install LinuxDeployQt
-        uses: miurahr/install-linuxdeployqt-action@v1.7.0
+      - name: Install LinuxDeploy
+        uses: miurahr/install-linuxdeploy-action@v1
+        with:
+          plugins: qt appimage
         
       # Retrieve Ccache     
       - name: Retrieve ccache
