@@ -93,7 +93,7 @@ jobs:
 
       # Install LinuxDeployQt
       - name: Install LinuxDeployQt
-        uses: miurahr/install-linuxdeployqt-action@v0
+        uses: miurahr/install-linuxdeployqt-action@v1.0.1
           
       # Retrieve Ccache   
       - name: Retrieve ccache
@@ -270,7 +270,7 @@ jobs:
       
       # Install LinuxDeployQt
       - name: Install LinuxDeployQt
-        uses: miurahr/install-linuxdeployqt-action@v0
+        uses: miurahr/install-linuxdeployqt-action@v1.0.1
         
       # Retrieve Ccache     
       - name: Retrieve ccache
