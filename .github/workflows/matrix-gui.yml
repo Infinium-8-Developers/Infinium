@@ -365,6 +365,20 @@ jobs:
           mkdir -p Infinium-GUI-${TAG}/usr/share/applications
           mkdir -p Infinium-GUI-${TAG}/usr/share/icons/hicolor/scalable/apps
           mkdir -p Infinium-GUI-${TAG}/usr/share/icons/hicolor/256x256/apps
+          ls
+          echo 1
+          ls -la Infinium-GUI-${TAG}
+          echo 2
+          ls Infinium-GUI-${TAG}/usr/bin
+          echo 3
+          ls Infinium-GUI-${TAG}/usr/lib
+          echo 4
+          ls Infinium-GUI-${TAG}/usr/share/applications
+          echo 5
+          ls Infinium-GUI-${TAG}/usr/share/icons/hicolor/scalable/apps
+          echo 6
+          ls Infinium-GUI-${TAG}/usr/share/icons/hicolor/256x256/apps
+          echo 7
           cp -r ../../src/gui/qt-daemon/layout/html Infinium-GUI-${TAG}/usr/bin/
           cp ${TARGETS} Infinium-GUI-${TAG}/usr/bin/       
           cp ../../utils/buildings/linux/64bit/Infinium.desktop Infinium-GUI-${TAG}/usr/share/applications/Infinium.desktop
