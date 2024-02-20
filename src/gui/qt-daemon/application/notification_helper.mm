@@ -1,18 +1,20 @@
-#include "notification_helper.h"
-#include <Foundation/Foundation.h>
-#include <Foundation/NSUserNotification.h>
-#include <Foundation/NSUserNotificationCenter.h>
+#import <Foundation/Foundation.h>
 
-void notification_helper::show(const std::string& title, const std::string& message)
-{
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+@interface NotificationHelper : NSObject
 
++ (void)showWithTitle:(NSString *)title message:(NSString *)message;
+
+@end
+
+@implementation NotificationHelper
+
++ (void)showWithTitle:(NSString *)title message:(NSString *)message {
     NSUserNotification *userNotification = [[NSUserNotification alloc] init];
-    [userNotification setTitle:[NSString stringWithUTF8String:title.c_str()]];
-    [userNotification setInformativeText:[NSString stringWithUTF8String:message.c_str()]];
-
+    userNotification.title = title;
+    userNotification.informativeText = message;
+    
     NSUserNotificationCenter *center = [NSUserNotificationCenter defaultUserNotificationCenter];
     [center deliverNotification:userNotification];
-
-    [pool release]; // Liberar el autorelease pool
 }
+
+@end
