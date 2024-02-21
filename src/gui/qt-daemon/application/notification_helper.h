@@ -13,5 +13,13 @@
         // Implementación para otras plataformas
         LOG_PRINT_RED("System notifications are not supported for this platform!", LOG_LEVEL_0);
     }
+#else
+    #import <Foundation/Foundation.h>
+    
+    @interface NotificationHelper : NSObject
+    
+    + (void)showNotificationWithTitle:(NSString *)title message:(NSString *)message;
+    
+    @end
 #endif
 
