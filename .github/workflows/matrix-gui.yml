@@ -418,11 +418,11 @@ jobs:
  # Mac builds on Catalina VM
   macos_build:
     name: macOS
-    runs-on: macos-latest
+    runs-on: macos-13
     env:
       LABEL: osx
-      CC: /usr/local/opt/llvm@11/bin/clang
-      CXX: /usr/local/opt/llvm@11/bin/clang++
+      CC: /usr/local/opt/llvm@15/bin/clang
+      CXX: /usr/local/opt/llvm@15/bin/clang++
       CCACHE_DIR: $GITHUB_WORKSPACE/.ccache
     steps:
       - uses: actions/checkout@v2
@@ -436,10 +436,8 @@ jobs:
       # Fetch Dependencies
       - name: Dependencies
         run: |
-          brew install --force ccache llvm@11
-          brew untap homebrew/cask
-          brew untap homebrew/core
-
+          brew install --force ccache llvm@15 cmake
+          ls /Applications/Xcode*
        # Install Boost
       - name: Install Boost
         run: |    
@@ -471,15 +469,14 @@ jobs:
       # Configure project with cmake
       - name: Configure
         run: |
-          sudo xcode-select -switch /Applications/Xcode_14.2.app
           mkdir build && cd build
-          cmake -D CMAKE_OSX_SYSROOT=/Applications/Xcode_14.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -D BOOST_ROOT=/Users/runner/work/Infinium/Infinium/boost_1_80_0 -D BOOST_LIBRARYDIR=/Users/runner/work/Infinium/Infinium/boost_1_80_0/stage/lib  -D OPENSSL_ROOT_DIR=/usr/local/opt/openssl -D CMAKE_PREFIX_PATH=/Users/runner/work/Infinium/Qt/5.12.12/clang_64 -D BUILD_GUI=ON -D CMAKE_BUILD_TYPE=Release -D BUILD_TESTS=OFF ..
+          cmake -D BOOST_ROOT=/Users/runner/work/Infinium/Infinium/boost_1_80_0 -D BOOST_LIBRARYDIR=/Users/runner/work/Infinium/Infinium/boost_1_80_0/stage/lib  -D OPENSSL_ROOT_DIR=/usr/local/opt/openssl -D CMAKE_PREFIX_PATH=/Users/runner/work/Infinium/Qt/5.12.12/clang_64 -D BUILD_GUI=ON -D CMAKE_BUILD_TYPE=Release -D BUILD_TESTS=OFF ..
       
       # Build for macOS
       - name: Build
         run: |
           cd build
-          make CXXFLAGS=-D"NS_FORMAT_ARGUMENT\(A\)="
+          make
            
        # Prepare for deploy
       - name: Prepare for Deploy
