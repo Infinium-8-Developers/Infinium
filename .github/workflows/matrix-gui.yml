@@ -1,4 +1,4 @@
-name: Build GUIs
+name: Build GUI
 on:
   push:
   pull_request:
@@ -473,13 +473,13 @@ jobs:
         run: |
           sudo xcode-select -switch /Applications/Xcode_14.2.app
           mkdir build && cd build
-          cmake -D CMAKE_OSX_SYSROOT=/Applications/Xcode_14.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -D BOOST_ROOT=/Users/runner/work/Infinium/Infinium/boost_1_80_0 -D BOOST_LIBRARYDIR=/Users/runner/work/Infinium/Infinium/boost_1_80_0/stage/lib  -D OPENSSL_ROOT_DIR=/usr/local/opt/openssl -D CMAKE_PREFIX_PATH=/Users/runner/work/Infinium/Qt/5.12.12/clang_64 -D BUILD_GUI=ON -D CMAKE_BUILD_TYPE=Release  -D BUILD_TESTS=OFF -G Xcode ..
+          cmake -D CMAKE_OSX_SYSROOT=/Applications/Xcode_14.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -D BOOST_ROOT=/Users/runner/work/Infinium/Infinium/boost_1_80_0 -D BOOST_LIBRARYDIR=/Users/runner/work/Infinium/Infinium/boost_1_80_0/stage/lib  -D OPENSSL_ROOT_DIR=/usr/local/opt/openssl -D CMAKE_PREFIX_PATH=/Users/runner/work/Infinium/Qt/5.12.12/clang_64 -D BUILD_GUI=ON -D CMAKE_BUILD_TYPE=Release -D BUILD_TESTS=OFF ..
       
       # Build for macOS
       - name: Build
         run: |
           cd build
-          make
+          make CXXFLAGS=-D"NS_FORMAT_ARGUMENT\(A\)="
            
        # Prepare for deploy
       - name: Prepare for Deploy
