@@ -1,4 +1,10 @@
-#import "notification_helper.h"
+#include <Foundation/Foundation.h>
+
+@interface NotificationHelper : NSObject
+    
+   + (void)showNotificationWithTitle:(NSString *)title message:(NSString *)message;
+    
+@end
 
 @implementation NotificationHelper
 
@@ -11,4 +17,3 @@
 }
 
 @end
-
