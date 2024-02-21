@@ -14,7 +14,7 @@
         LOG_PRINT_RED("System notifications are not supported for this platform!", LOG_LEVEL_0);
     }
 #else
-    #import <Foundation/Foundation.h>
+    #include <Foundation/Foundation.h>
     
     @interface NotificationHelper : NSObject
     
