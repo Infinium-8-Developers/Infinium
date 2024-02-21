@@ -1,4 +1,4 @@
-name: Build GUI
+name: Build GUIs
 on:
   push:
   pull_request:
