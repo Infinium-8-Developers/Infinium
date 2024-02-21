@@ -2291,6 +2291,7 @@ void MainWindow::show_notification(const std::string& title, const std::string& 
   m_tray_icon->showMessage(QString().fromUtf8(title.c_str()), QString().fromUtf8(message.c_str()));
 #else
   // use native notification system on macOS
+  notification_helper::show(title, message);
 #endif
   CATCH_ENTRY2(void());
 }

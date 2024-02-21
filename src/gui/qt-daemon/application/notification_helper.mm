@@ -1,19 +1,14 @@
-#import <Foundation/Foundation.h>
+#include "notification_helper.h"
+#include <Foundation/NSString.h>
+#include <Foundation/NSUserNotification.h>
 
-@interface NotificationHelper : NSObject
-    
-   + (void)showNotificationWithTitle:(NSString *)title message:(NSString *)message;
-    
-@end
+void notification_helper::show(const std::string& title, const std::string& message)
+{
+  NSUserNotification *userNotification = [[[NSUserNotification alloc] init] autorelease];
+  userNotification.title = [NSString stringWithUTF8String:title.c_str()];
+  userNotification.informativeText =  [NSString stringWithUTF8String:message.c_str()];
 
-@implementation NotificationHelper
-
-+ (void)showNotificationWithTitle:(NSString *)title message:(NSString *)message {
-    NSUserNotification *notification = [[NSUserNotification alloc] init];
-    notification.title = title;
-    notification.informativeText = message;
-    
-    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+  NSUserNotificationCenter* center = [NSUserNotificationCenter defaultUserNotificationCenter];
+  [center deliverNotification:userNotification];
 }
 
-@end
