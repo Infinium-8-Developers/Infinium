@@ -371,7 +371,8 @@ jobs:
           cp ../../resources/app_icon.svg Infinium-GUI-${TAG}/usr/share/icons/hicolor/scalable/apps/Infinium.svg
           cp ../../resources/app_icon_256.png Infinium-GUI-${TAG}/usr/share/icons/hicolor/256x256/apps/Infinium.png
           echo "Exec=$prj_root/build/src/Infinium-GUI-${TAG}/usr/bin/infinium" >> Infinium-GUI-${TAG}/usr/share/applications/Infinium.desktop
-          /home/runner/work/Infinium/Infinium/build/src/linuxdeploy-x86_64.AppImage --appdir=Infinium-GUI-${TAG} --plugin=qt --output=appimage --create-desktop-file --executable=usr/bin/infinium --icon-file=../../resources/app_icon.svg
+          wget https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
+          linuxdeployqt-continuous-x86_64.AppImage ./Infinium-GUI-${TAG}/usr/share/applications/Infinium.desktop -qmake=/home/runner/work/Infinium/Qt/5.12.12/gcc_64/bin/qmake
           
       # Upload to GH Release
       - name: Upload to GH Release
