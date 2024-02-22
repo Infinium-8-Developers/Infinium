@@ -185,6 +185,7 @@ jobs:
           cp ../../resources/app_icon_256.png Infinium-GUI-${TAG}/usr/share/icons/hicolor/256x256/apps/Infinium.png
           echo "Exec=$prj_root/build/src/Infinium-GUI-${TAG}/usr/bin/infinium" >> Infinium-GUI-${TAG}/usr/share/applications/Infinium.desktop
           wget https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
+          ls -la
           chmod 777 linuxdeployqt-continuous-x86_64.AppImage
           linuxdeployqt-continuous-x86_64.AppImage ./Infinium-GUI-${TAG}/usr/share/applications/Infinium.desktop -qmake=/home/runner/work/Infinium/Qt/5.12.12/gcc_64/bin/qmake
       
