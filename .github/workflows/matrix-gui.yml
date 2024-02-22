@@ -365,34 +365,13 @@ jobs:
           mkdir -p Infinium-GUI-${TAG}/usr/share/applications
           mkdir -p Infinium-GUI-${TAG}/usr/share/icons/hicolor/scalable/apps
           mkdir -p Infinium-GUI-${TAG}/usr/share/icons/hicolor/256x256/apps
-          ls
-          echo 1
-          ls -la Infinium-GUI-${TAG}
-          echo 2
-          ls Infinium-GUI-${TAG}/usr/bin
-          echo 3
-          ls Infinium-GUI-${TAG}/usr/lib
-          echo 4
-          ls Infinium-GUI-${TAG}/usr/share/applications
-          echo 5
-          ls Infinium-GUI-${TAG}/usr/share/icons/hicolor/scalable/apps
-          echo 6
-          ls Infinium-GUI-${TAG}/usr/share/icons/hicolor/256x256/apps
-          echo 7
           cp -r ../../src/gui/qt-daemon/layout/html Infinium-GUI-${TAG}/usr/bin/
           cp ${TARGETS} Infinium-GUI-${TAG}/usr/bin/       
           cp ../../utils/buildings/linux/64bit/Infinium.desktop Infinium-GUI-${TAG}/usr/share/applications/Infinium.desktop
           cp ../../resources/app_icon.svg Infinium-GUI-${TAG}/usr/share/icons/hicolor/scalable/apps/Infinium.svg
           cp ../../resources/app_icon_256.png Infinium-GUI-${TAG}/usr/share/icons/hicolor/256x256/apps/Infinium.png
           echo "Exec=$prj_root/build/src/Infinium-GUI-${TAG}/usr/bin/infinium" >> Infinium-GUI-${TAG}/usr/share/applications/Infinium.desktop
-          /home/runner/work/Infinium/Infinium/build/src/linuxdeploy-x86_64.AppImage --appdir=Infinium-GUI-${TAG} --plugin=qt --output=appimage --create-desktop-file --executable=./usr/bin/infinium --icon-file=../../resources/app_icon.svg
-          ls
-          ls -la Infinium-GUI-${TAG}
-          ls Infinium-GUI-${TAG}/usr/bin
-          ls Infinium-GUI-${TAG}/usr/lib
-          ls Infinium-GUI-${TAG}/usr/share/applications
-          ls Infinium-GUI-${TAG}/usr/share/icons/hicolor/scalable/apps
-          ls Infinium-GUI-${TAG}/usr/share/icons/hicolor/256x256/apps
+          /home/runner/work/Infinium/Infinium/build/src/linuxdeploy-x86_64.AppImage --appdir=Infinium-GUI-${TAG} --plugin=qt --output=appimage --create-desktop-file --executable=../infinium --icon-file=../../resources/app_icon.svg
           
       # Upload to GH Release
       - name: Upload to GH Release
