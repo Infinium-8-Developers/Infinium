@@ -196,6 +196,11 @@ jobs:
           chmod 777 appimagetool-x86_64.AppImage
           rm -rf Infinium-GUI-${TAG}/AppRun
           cp ../../utils/buildings/linux/64bit/infinium_appimage_wrapper.sh Infinium-GUI-${TAG}/AppRun
+          chmod 777 Infinium-GUI-${TAG}/*
+          chmod 777 Infinium-GUI-${TAG}/*/*
+          chmod 777 Infinium-GUI-${TAG}/*/*/*
+          chmod 777 Infinium-GUI-${TAG}/*/*/*/*
+          chmod 777 Infinium-GUI-${TAG}/*/*/*/*/*
           /home/runner/work/Infinium/Infinium/build/src/appimagetool-x86_64.AppImage ./Infinium-GUI-${TAG} Infinium-GUI-${TAG}-${LABEL}.AppImage
       
       # Upload to GH Release
@@ -616,7 +621,7 @@ jobs:
             
       # Compile .ISS to .EXE Installer - No Release
       - name: Compile .ISS to .EXE Installer
-        if: github.event_name != 'release'
+        if: github.event_name != 'release' || !startsWith(github.ref, 'refs/tags/')
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
         with:
           path: build/src/Release/Infinium-Gui-${{ github.sha }}/setup_64.iss
@@ -624,7 +629,7 @@ jobs:
       
       # Compile .ISS to .EXE Installer - Release
       - name: Compile .ISS to .EXE Installer
-        if: github.event_name == 'release'
+        if: github.event_name == 'release' || startsWith(github.ref, 'refs/tags/')
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
         with:
           path: build/src/Release/Infinium-Gui-${{ github.event.release.tag_name }}/setup_64.iss
