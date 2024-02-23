@@ -173,7 +173,7 @@ jobs:
           cp /home/runner/work/Infinium/Qt/5.12.12/gcc_64/plugins/xcbglintegrations/libqxcb-glx-integration.so Infinium-Gui-${TAG}/xcbglintegrations
           tar cvfz Infinium-Gui-${TAG}-${LABEL}.tar.gz Infinium-Gui-${TAG}/
 
-          echo Infinium GUI AppData
+          echo Infinium GUI AppImage
           
           rm -rf Infinium-GUI-${TAG}
           mkdir Infinium-GUI-${TAG}
@@ -221,8 +221,8 @@ jobs:
       - name: Upload To GH Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: Infinium-GUI-${{ github.sha }}-${{ env.LABEL }}.AppData
-          path: ./build/src/Infinium-GUI-${{ github.sha }}-${{ env.LABEL }}.AppData
+          name: Infinium-GUI-${{ github.sha }}-${{ env.LABEL }}.AppImage
+          path: ./build/src/Infinium-GUI-${{ github.sha }}-${{ env.LABEL }}.AppImage
 
   ubuntu_now_build:
     name: ${{ matrix.build_name }}
