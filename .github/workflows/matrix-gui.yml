@@ -620,15 +620,15 @@ jobs:
           path: ./build/src/Release/Infinium-Gui-${{ github.sha }}  
             
       # Compile .ISS to .EXE Installer - No Release
-      - name: Compile .ISS to .EXE Installer
-        if: github.event_name != 'release' | !contains(github.ref, 'refs/tags/')
+      - name: Compile .ISS to .EXE Installer - No Release
+        if: github.event_name != 'release' | !(contains(github.ref, 'refs/tags/'))
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
         with:
           path: build/src/Release/Infinium-Gui-${{ github.sha }}/setup_64.iss
           options: /O+ /DBinariesPath=..\Infinium-Gui-${{ github.sha }} /O..\Infinium\build\src\Release /FInfinium-Gui-${{ github.sha }}-${{ env.LABEL }}
       
       # Compile .ISS to .EXE Installer - Release
-      - name: Compile .ISS to .EXE Installer
+      - name: Compile .ISS to .EXE Installer - Release
         if: github.event_name == 'release' | contains(github.ref, 'refs/tags/')
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
         with:
