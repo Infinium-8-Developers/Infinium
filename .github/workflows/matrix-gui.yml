@@ -56,7 +56,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt upgrade
-          sudo apt-get install -y curl build-essential python3-dev autotools-dev libicu-dev libbz2-dev cmake git screen checkinstall zlib1g-dev fuse libfuse2 libxcb-xinerama0 ${{ matrix.package_name }}   
+          sudo apt-get install -y curl build-essential python3-dev autotools-dev libicu-dev libbz2-dev cmake git screen checkinstall zlib1g-dev fuse fuse3 libfuse2 libxcb-xinerama0 ${{ matrix.package_name }}   
 
       # Install Boost 
       - name: Install Boost
