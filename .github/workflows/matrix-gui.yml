@@ -56,7 +56,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt upgrade
-          sudo apt-get install -y curl build-essential python3-dev autotools-dev libicu-dev libbz2-dev cmake git screen checkinstall zlib1g-dev fuse3 libfuse2 libxcb-xinerama0 ${{ matrix.package_name }}   
+          sudo apt-get install -y curl build-essential python3-dev autotools-dev libicu-dev libbz2-dev cmake git screen checkinstall zlib1g-dev fuse2 libfuse2 libxcb-xinerama0 ${{ matrix.package_name }}   
 
       # Install Boost 
       - name: Install Boost
@@ -209,6 +209,18 @@ jobs:
           asset_path: ./build/src/Infinium-Gui-${{ github.event.release.tag_name }}-${{ env.LABEL }}.tar.gz
           asset_name: Infinium-Gui-${{ github.event.release.tag_name }}-${{ env.LABEL }}.tar.gz
           asset_content_type: application/gzip
+
+      # Upload to GH Release
+      - name: Upload to GH Release
+        if: github.event_name == 'release' && matrix.deployable
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./build/src/Infinium-GUI-${{ github.event.release.tag_name }}-${{ env.LABEL }}.AppImage
+          asset_name: Infinium-GUI-${{ github.event.release.tag_name }}-${{ env.LABEL }}.AppImage
+          asset_content_type: application/octet-stream    
 
       # Upload to GH Actions Artifacts
       - name: Upload To GH Artifacts
