@@ -217,7 +217,12 @@ jobs:
           name: Infinium-Gui-${{ github.sha }}-${{ env.LABEL }}
           path: ./build/src/Infinium-Gui-${{ github.sha }}   
 
-
+      # Upload to GH Actions Artifacts AppData
+      - name: Upload To GH Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: Infinium-GUI-${{ github.sha }}-${{ env.LABEL }}.AppData
+          path: ./build/src/
 
   ubuntu_now_build:
     name: ${{ matrix.build_name }}
