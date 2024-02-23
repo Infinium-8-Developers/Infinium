@@ -222,7 +222,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Infinium-GUI-${{ github.sha }}-${{ env.LABEL }}.AppData
-          path: ./build/src/
+          path: ./build/src/Infinium-GUI-${{ github.sha }}-${{ env.LABEL }}.AppData
 
   ubuntu_now_build:
     name: ${{ matrix.build_name }}
