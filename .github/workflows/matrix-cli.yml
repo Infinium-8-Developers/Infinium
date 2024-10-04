@@ -252,7 +252,7 @@ jobs:
   # Mac builds on Catalina VM
   macos_build:
     name: macOS
-    runs-on: macos-latest
+    runs-on: macos-13
     env:
       LABEL: osx
       CC: /usr/local/opt/llvm@15/bin/clang
@@ -264,8 +264,7 @@ jobs:
       # Fetch Dependencies
       - name: Dependencies
         run: |
-          brew install --force ccache llvm@15
-          ls /usr/local/opt/llvm@15/bin
+          brew install --force ccache llvm@15 cmake
 
       # Install Boost
       - name: Install Boost
