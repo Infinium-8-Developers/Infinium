@@ -17,7 +17,7 @@ jobs:
       fail-fast: false
       matrix:
         # Add more compilers here if you need them
-        build_name: ['Ubuntu 20.04 - GCC 9', 'Ubuntu 20.04 - GCC 10', 'Ubuntu 20.04 - GCC 11']
+        build_name: ['Ubuntu 20.04 - GCC 9', 'Ubuntu 20.04 - GCC 10', 'Ubuntu 20.04 - GCC 12']
         include:
           - build_name: 'Ubuntu 20.04 - GCC 9'
             package_name: 'gcc-9 g++-9'
@@ -31,11 +31,11 @@ jobs:
             cxx: g++-10
             label: ubuntu-20.04-linux-gcc-10
             deployable: false
-          - build_name: 'Ubuntu 20.04 - GCC 11'
-            package_name: 'gcc-11 g++-11'
-            cc: gcc-11
-            cxx: g++-11
-            label: ubuntu-20.04-linux-gcc-11
+          - build_name: 'Ubuntu 20.04 - GCC 12'
+            package_name: 'gcc-12 g++-12'
+            cc: gcc-12
+            cxx: g++-12
+            label: ubuntu-20.04-linux-gcc-12
             deployable: false
     env:
       CCACHE_DIR: $GITHUB_WORKSPACE/.ccache
