@@ -1,4 +1,4 @@
-## Cloning
+## Clonin
 
 Be sure to clone the repository properly:\
 `$ git clone --recursive https://github.com/Infinium-8/Infinium.git`
