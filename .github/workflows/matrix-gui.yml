@@ -19,7 +19,7 @@ jobs:
       matrix:
       
         # Add more compilers here if you need them
-        build_name: ['Ubuntu 20.04 - GCC 9', 'Ubuntu 20.04 - GCC 10', 'Ubuntu 20.04 - GCC 11']
+        build_name: ['Ubuntu 20.04 - GCC 9', 'Ubuntu 20.04 - GCC 10']
         include:
           - build_name: 'Ubuntu 20.04 - GCC 9'
             package_name: 'gcc-9 g++-9'
@@ -33,17 +33,11 @@ jobs:
             cxx: g++-10
             label: ubuntu-20.04-linux-gcc-10
             deployable: false
-          - build_name: 'Ubuntu 20.04 - GCC 11'
-            package_name: 'gcc-11 g++-11'
-            cc: gcc-11
-            cxx: g++-11
-            label: ubuntu-20.04-linux-gcc-11
-            deployable: false
     env:
       CCACHE_DIR: $GITHUB_WORKSPACE/.ccache
       LABEL: ${{ matrix.label }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       # Checkout repository and submodules
       - name: Checkout repository and submodules
@@ -97,7 +91,7 @@ jobs:
           
       # Retrieve Ccache   
       - name: Retrieve ccache
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: .ccache
           key: ccache-${{ matrix.label }}     
@@ -218,7 +212,7 @@ jobs:
       # Upload to GH Release
       - name: Upload to GH Release
         if: github.event_name == 'release' && matrix.deployable
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@v4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -229,14 +223,14 @@ jobs:
 
       # Upload to GH Actions Artifacts
       - name: Upload To GH Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Infinium-Gui-${{ github.sha }}-${{ env.LABEL }}
           path: ./build/src/Infinium-Gui-${{ github.sha }}   
 
       # Upload to GH Actions Artifacts AppData
       - name: Upload To GH Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Infinium-GUI-${{ github.sha }}-${{ env.LABEL }}.AppImage
           path: ./build/src/Infinium-GUI-${{ github.sha }}-${{ env.LABEL }}.AppImage
@@ -267,11 +261,10 @@ jobs:
       CCACHE_DIR: $GITHUB_WORKSPACE/.ccache
       LABEL: ${{ matrix.label }}
     steps:
-      - uses: actions/checkout@v2
       
       # Checkout repository and submodules
       - name: Checkout repository and submodules
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           submodules: recursive   
 
@@ -321,7 +314,7 @@ jobs:
         
       # Retrieve Ccache     
       - name: Retrieve ccache
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: .ccache
           key: ccache-${{ matrix.label }}     
@@ -396,7 +389,7 @@ jobs:
       # Upload to GH Release
       - name: Upload to GH Release
         if: github.event_name == 'release' && matrix.deployable
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@v4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -407,7 +400,7 @@ jobs:
 
       # Upload to GH Actions Artifacts
       - name: Upload To GH Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Infinium-Gui-${{ github.sha }}-${{ env.LABEL }}
           path: ./build/src/Infinium-Gui-${{ github.sha }}
@@ -424,11 +417,10 @@ jobs:
       CXX: /usr/local/opt/llvm@15/bin/clang++
       CCACHE_DIR: $GITHUB_WORKSPACE/.ccache
     steps:
-      - uses: actions/checkout@v2
 
       # Checkout repository and submodules
       - name: Checkout repository and submodules
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           submodules: recursive
      
@@ -449,7 +441,7 @@ jobs:
 
       # Retrieve ccache    
       - name: Retrieve ccache
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: .ccache
           key: ccache-osx
@@ -506,7 +498,7 @@ jobs:
           
       # Upload to GH Actions Artifacts
       - name: Upload To GH Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Infinium-Gui-${{ github.sha }}-${{ env.LABEL }}
           path: ./build/src/Infinium-Gui-${{ github.sha }}
@@ -521,7 +513,6 @@ jobs:
       MSBUILD_PATH: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin"
       LABEL: windows
     steps:
-      - uses: actions/checkout@v2
 
       # Install Clcache
       - name: Setup clcache
@@ -529,13 +520,13 @@ jobs:
 
       # Checkout repository and submodules  
       - name: Checkout repository and submodules
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           submodules: recursive
 
       # Retrive Clcache
       - name: Retrieve clcache
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: clcache
           key: clcache-windows
@@ -610,7 +601,7 @@ jobs:
 
       # Upload to GH Actions Artifacts
       - name: Upload To GH Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Infinium-Gui-${{ github.sha }}-${{ env.LABEL }}
           path: ./build/src/Release/Infinium-Gui-${{ github.sha }}  
@@ -633,7 +624,7 @@ jobs:
       
       # Upload to GH Actions Artifacts EXE
       - name: Upload To GH Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Infinium-Gui-${{ github.sha }}-${{ env.LABEL }}.exe
           path: ./build/src/Release/Infinium-Gui-${{ github.sha }}-${{ env.LABEL }}.exe
