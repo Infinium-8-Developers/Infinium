@@ -602,6 +602,7 @@ namespace net_utils
 	{
 		std::string buf = "HTTP/1.1 ";
 		buf += boost::lexical_cast<std::string>(response.m_response_code) + " " + response.m_response_comment + "\r\n" +
+			"Access-Control-Allow-Origin: *\r\n"
 			"Server: Epee-based\r\n"
 			"Content-Length: ";
 		buf += boost::lexical_cast<std::string>(response.m_body.size()) + "\r\n";
