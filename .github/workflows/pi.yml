@@ -12,6 +12,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Instalar dependencias
+        run: |
+          sudo apt update
+          sudo apt install -y python3-dev:armhf
        # Boost and GCC PI
       - name: Configurar herramientas
         run: |
