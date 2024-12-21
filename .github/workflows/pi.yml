@@ -21,7 +21,8 @@ jobs:
           cd Python-3.10.12
       
           # Establecer la variable para evitar la verificación de /dev/ptmx
-          export ac_cv_file__dev_ptmx=no
+          echo "ac_cv_file__dev_ptmx=no" > $GITHUB_WORKSPACE/config.site
+          export CONFIG_SITE=$GITHUB_WORKSPACE/config.site
       
           # Configurar y compilar Python
           ./configure --host=arm-linux-gnueabihf --build=x86_64-linux-gnu --prefix=/opt/python-arm --enable-shared \
