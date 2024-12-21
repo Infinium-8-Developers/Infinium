@@ -22,9 +22,6 @@ jobs:
           wget https://boostorg.jfrog.io/artifactory/main/release/1.80.0/source/boost_1_80_0.tar.gz
           tar -xzf boost_1_80_0.tar.gz
           cd boost_1_80_0
-      - name: Configurar Boost Build
-        run: |
-          cd boost_1_80_0
-          ./bootstrap.sh --prefix=$(pwd)/boost --without-libraries=context
+          ./bootstrap.sh --with-libraries=system,filesystem,thread,date_time,chrono,regex,serialization,atomic,program_options,locale,timer,log
           echo "using gcc : arm : arm-linux-gnueabihf-g++ ;" > project-config.jam
-          ./b2 toolset=gcc-arm target-os=linux architecture=arm address-model=32 --without-context --with=all install 
+          ./b2 toolset=gcc-arm target-os=linux architecture=arm address-model=32
