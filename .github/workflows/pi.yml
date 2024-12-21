@@ -19,10 +19,17 @@ jobs:
           wget https://www.python.org/ftp/python/3.10.12/Python-3.10.12.tgz
           tar -xzf Python-3.10.12.tgz
           cd Python-3.10.12
+      
+          # Establecer la variable para evitar la verificación de /dev/ptmx
           echo "ac_cv_file__dev_ptmx=no" >> $GITHUB_ENV
-          ./configure --host=arm-linux-gnueabihf --build=x86_64-linux-gnu --prefix=/opt/python-arm --enable-shared LDFLAGS="-L/usr/arm-linux-gnueabihf/lib" CPPFLAGS="-I/usr/arm-linux-gnueabihf/include" --disable-ipv6 --config-site=$GITHUB_WORKSPACE/CONFIG_SITE
+      
+          # Configurar y compilar Python
+          ./configure --host=arm-linux-gnueabihf --build=x86_64-linux-gnu --prefix=/opt/python-arm --enable-shared \
+            LDFLAGS="-L/usr/arm-linux-gnueabihf/lib" CPPFLAGS="-I/usr/arm-linux-gnueabihf/include" \
+            --disable-ipv6
           make
           make install
+
        # Boost and GCC PI
       - name: Configurar herramientas
         run: |
