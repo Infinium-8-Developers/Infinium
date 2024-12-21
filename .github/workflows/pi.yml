@@ -19,8 +19,10 @@ jobs:
       - name: Set up cross-compilation toolchain
         run: |
           sudo dpkg --add-architecture armhf
+          sudo apt-get install aptitude
+          sudo aptitude install zlib1g-dev:armhf
           sudo apt update
-          sudo apt install -y build-essential g++-arm-linux-gnueabihf gcc-arm-linux-gnueabihf wget tar curl build-essential python3-dev autotools-dev libicu-dev libbz2-dev cmake git screen checkinstall zlib1g-dev:armhf
+          sudo apt install -y build-essential g++-arm-linux-gnueabihf gcc-arm-linux-gnueabihf wget tar curl build-essential python3-dev autotools-dev libicu-dev libbz2-dev cmake git screen checkinstall
 
       - name: Download and extract Boost
         run: |
