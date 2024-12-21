@@ -1,7 +1,5 @@
 name: Build GUI
 on:
-  push:
-  pull_request:
   release:
     types: [published]
  
