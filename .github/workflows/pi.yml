@@ -1,30 +1,48 @@
-name: Build CLI
+name: Build Boost for ARM
+
 on:
   push:
+    branches:
+      - main
   pull_request:
-  release:
-    types: [published]
- 
-env:
-  TAG: ${{ github.ref }}
+    branches:
+      - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04  # Usamos Ubuntu como base para el trabajo
+
     steps:
-       # Boost and GCC PI
-      - name: Configurar herramientas
+      - name: Check out repository
+        uses: actions/checkout@v3  # Para obtener el código fuente del repositorio
+
+      - name: Set up cross-compilation toolchain
         run: |
           sudo apt update
-          sudo apt install -y gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf build-essential python3-dev
-      - name: Descargar Boost
+          sudo apt install -y build-essential g++-arm-linux-gnueabihf gcc-arm-linux-gnueabihf wget tar
+
+      - name: Download and extract Boost
         run: |
           wget https://boostorg.jfrog.io/artifactory/main/release/1.81.0/source/boost_1_81_0.tar.gz
           tar -xzf boost_1_81_0.tar.gz
-          cd boost_1_81_0
-          /usr/bin/arm-linux-gnueabihf-gcc --version
-          /usr/bin/arm-linux-gnueabihf-g++ --version
+
+      - name: Create user-config.jam for cross-compilation
+        run: |
+          echo "using gcc : arm : /usr/bin/arm-linux-gnueabihf-gcc ;" > boost_1_81_0/user-config.jam
+          echo "using gcc : arm : /usr/bin/arm-linux-gnueabihf-g++ ;" >> boost_1_81_0/user-config.jam
+
+      - name: Set environment variables for cross-compilation
+        run: |
           export CC=/usr/bin/arm-linux-gnueabihf-gcc
           export CXX=/usr/bin/arm-linux-gnueabihf-g++
-          ./bootstrap.sh
-          ./b2 target-os=linux address-model=32 architecture=arm abi=aapcs
+
+      - name: Build Boost
+        run: |
+          cd boost_1_81_0
+          ./bootstrap.sh --user-config=user-config.jam
+          ./b2 toolset=gcc-arm stage
+          ./b2 toolset=gcc-arm install --prefix=/home/runner/work/Infinium/Infinium/boost
+
+      - name: Verify Boost installation
+        run: |
+          ls /usr/local/boost
