@@ -41,8 +41,7 @@ jobs:
           cd boost_1_81_0
           rm -rf boost_1_81_0/tools/build/*
           ./bootstrap.sh
-          ./b2 toolset=gcc-arm stage
-          ./b2 toolset=gcc-arm install --prefix=/home/runner/work/Infinium/Infinium/boost
+          ./b2 toolset=gcc-arm --prefix=/home/runner/work/Infinium/Infinium/boost
 
       - name: Verify Boost installation
         run: |
