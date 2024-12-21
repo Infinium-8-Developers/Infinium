@@ -45,4 +45,4 @@ jobs:
 
       - name: Verify Boost installation
         run: |
-          ls /usr/local/boost
+          ls /home/runner/work/Infinium/Infinium/boost
