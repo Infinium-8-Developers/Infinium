@@ -25,7 +25,7 @@ jobs:
           export CC=arm-linux-gnueabihf-gcc
           export CXX=arm-linux-gnueabihf-g++
           ./bootstrap.sh
-          ./b2 toolset=gcc target-os=linux address-model=32 architecture=arm abi=aapcs binary-format=elf \
+          ./b2 toolset=gcc-arm target-os=linux address-model=32 architecture=arm abi=aapcs binary-format=elf \
           cxxflags="-march=armv7-a -mfpu=neon -mfloat-abi=hard" \
           linkflags="-march=armv7-a -mfpu=neon -mfloat-abi=hard" \
           threading=multi -j$(nproc)
