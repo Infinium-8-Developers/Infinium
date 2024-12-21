@@ -11,7 +11,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04  # Usamos Ubuntu como base para el trabajo
-
+    env:
+        LABEL: windows
     steps:
       - name: Check out repository
         uses: actions/checkout@v3  # Para obtener el código fuente del repositorio
@@ -66,5 +67,39 @@ jobs:
       - name: Build
         run: |
           mkdir build && cd build
-          cmake -DCMAKE_C_COMPILER=arm-linux-gnueabihf-gcc -DCMAKE_CXX_COMPILER=arm-linux-gnueabihf-g++  -D OPENSSL_ROOT_DIR=/home/runner/work/Infinium/Infinium/openssl -D BUILD_GUI=OFF -D CMAKE_BUILD_TYPE=Release -D BUILD_TESTS=FALSE -D BOOST_ROOT=/home/runner/work/Infinium/Infinium/boost_1_81_0 -DCMAKE_C_FLAGS="-mcpu=cortex-a7 -mfpu=neon-vfpv4" -DCMAKE_CXX_FLAGS="-mcpu=cortex-a7 -mfpu=neon-vfpv4 -flto" -D Boost_LIBRARY_DIRS=/home/runner/work/Infinium/Infinium/boost_1_81_0/stage/lib -DCMAKE_EXE_LINKER_FLAGS="-Wl,--allow-multiple-definition" -D STATIC=true  ..
+          cmake -DCMAKE_C_COMPILER=arm-linux-gnueabihf-gcc -DCMAKE_CXX_COMPILER=arm-linux-gnueabihf-g++  -D OPENSSL_ROOT_DIR=/home/runner/work/Infinium/Infinium/openssl -D BUILD_GUI=OFF -D CMAKE_BUILD_TYPE=Release -D BUILD_TESTS=FALSE -D BOOST_ROOT=/home/runner/work/Infinium/Infinium/boost_1_81_0 -DCMAKE_C_FLAGS="-mcpu=cortex-a7 -mfpu=neon-vfpv4" -DCMAKE_CXX_FLAGS="-mcpu=cortex-a7 -mfpu=neon-vfpv4 -flto" -D Boost_LIBRARY_DIRS=/home/runner/work/Infinium/Infinium/boost_1_81_0/stage/lib -DCMAKE_EXE_LINKER_FLAGS="-Wl,--allow-multiple-definition" ..
           make
+
+      # Prepare for deploy
+      - name: Prepare for Deploy
+        id: before_deploy
+        env:
+          COMMIT_SHA: ${{ github.sha }}
+        run: |
+          if [[ "${TAG:5:4}" == "tags" ]]; then export TAG=${TAG:10}; else export TAG=${COMMIT_SHA}; fi
+          cd build/src
+          TARGETS="infiniumd connectivity_tool simplewallet"
+          if [[ "${LABEL}" != "aarch64" ]]; then strip ${TARGETS}; fi
+          rm -rf Infinium-${TAG}
+          mkdir Infinium-${TAG}
+          cp ${TARGETS} Infinium-${TAG}/
+          tar cvfz Infinium-${TAG}-${LABEL}.tar.gz Infinium-${TAG}/
+      
+      # Upload to GH Release
+      - name: Upload to GH Release
+        if: github.event_name == 'release'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./build/src/Infinium-${{ github.event.release.tag_name }}-${{ env.LABEL }}.tar.gz
+          asset_name: Infinium-${{ github.event.release.tag_name }}-${{ env.LABEL }}.tar.gz
+          asset_content_type: application/gzip
+
+      # Upload to GH Actions Artifacts
+      - name: Upload To GH Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Infinium-${{ github.sha }}-${{ env.LABEL }}
+          path: ./build/src/Infinium-${{ github.sha }}  
