@@ -48,7 +48,7 @@ jobs:
       # Install OpenSSL
       - name: Install OpenSSL
         run: |
-          wget https://zlib.net/zlib-1.2.11.tar.gz
+          wget https://ftp.osuosl.org/pub/libpng/src/zlib/zlib-1.2.11.tar.gz
           tar -xvzf zlib-1.2.11.tar.gz
           cd zlib-1.2.11
           CC=arm-linux-gnueabihf-gcc ./configure --prefix=/usr/arm-linux-gnueabihf
