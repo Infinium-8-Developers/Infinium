@@ -26,9 +26,9 @@ jobs:
         run: |
           cd boost_1_80_0
           pwd
-          ./bootstrap.sh --prefix=${pwd}/boost
-          echo "using gcc : arm : arm-linux-gnueabihf-g++ ;" > project-config.jam
+          sudo ./bootstrap.sh --prefix=${pwd}/boost
+          sudo echo "using gcc : arm : arm-linux-gnueabihf-g++ ;" > project-config.jam
       - name: Compilar Boost
         run: |
           cd boost_1_80_0
-          ./b2 toolset=gcc-arm target-os=linux architecture=arm address-model=32 --with=all install
+          sudo ./b2 toolset=gcc-arm target-os=linux architecture=arm address-model=32 --with=all install
