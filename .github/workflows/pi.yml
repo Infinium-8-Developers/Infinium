@@ -48,6 +48,13 @@ jobs:
       # Install OpenSSL
       - name: Install OpenSSL
         run: |
+          wget https://zlib.net/zlib-1.2.11.tar.gz
+          tar -xvzf zlib-1.2.11.tar.gz
+          cd zlib-1.2.11
+          CC=arm-linux-gnueabihf-gcc ./configure --prefix=/usr/arm-linux-gnueabihf
+          make
+          sudo make install
+
           curl -OL https://www.openssl.org/source/openssl-1.1.1n.tar.gz
           tar xaf openssl-1.1.1n.tar.gz 
           cd openssl-1.1.1n/
