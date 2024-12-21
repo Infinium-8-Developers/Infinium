@@ -67,3 +67,4 @@ jobs:
         run: |
           mkdir build && cd build
           cmake -DCMAKE_C_COMPILER=arm-linux-gnueabihf-gcc -DCMAKE_CXX_COMPILER=arm-linux-gnueabihf-g++  -D OPENSSL_ROOT_DIR=/home/runner/work/Infinium/Infinium/openssl -D BUILD_GUI=OFF -D CMAKE_BUILD_TYPE=Release -D BUILD_TESTS=FALSE -D BOOST_ROOT=/home/runner/work/Infinium/Infinium/boost_1_81_0 -DCMAKE_C_FLAGS="-mcpu=cortex-a7 -mfpu=neon-vfpv4" -DCMAKE_CXX_FLAGS="-mcpu=cortex-a7 -mfpu=neon-vfpv4 -flto" -D Boost_LIBRARY_DIRS=/home/runner/work/Infinium/Infinium/boost_1_81_0/stage/lib -DCMAKE_EXE_LINKER_FLAGS="-Wl,--allow-multiple-definition"  ..
+          make
