@@ -22,5 +22,5 @@ jobs:
           wget https://boostorg.jfrog.io/artifactory/main/release/1.80.0/source/boost_1_80_0.tar.gz
           tar -xzf boost_1_80_0.tar.gz
           cd boost_1_80_0
-          ./bootstrap.sh --with-libraries=system,filesystem,thread,date_time,chrono,regex,serialization,atomic,program_options,locale,timer,log
-          ./b2 toolset=gcc cxxflags="-march=armv7-a -mfpu=neon -mfloat-abi=hard"
+          ./bootstrap.sh
+          ./b2 install --prefix=$HOME/boost-armv7 target-os=linux architecture=arm address-model=32 abi=aapcs binary-format=elf cxxflags="-march=armv7-a -mfpu=neon -mfloat-abi=hard" -j$(nproc)
