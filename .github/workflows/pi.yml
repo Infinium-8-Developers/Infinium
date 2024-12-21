@@ -18,7 +18,6 @@ jobs:
 
       - name: Set up cross-compilation toolchain
         run: |
-          sudo dpkg --add-architecture armhf
           sudo apt-get install aptitude
           sudo aptitude search zlib1g-dev
           sudo apt update
