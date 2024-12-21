@@ -15,10 +15,10 @@ jobs:
       - name: Instalar dependencias
         run: |
           sudo dpkg --add-architecture armhf
-          echo "deb [arch=armhf] http://mirror.math.princeton.edu/pub/ubuntu/ jammy main restricted universe multiverse" | sudo tee -a
-          echo "deb [arch=armhf] http://mirror.math.princeton.edu/pub/ubuntu/ jammy-updates main restricted universe multiverse" | sudo tee -a
-          echo "deb [arch=armhf] http://mirror.math.princeton.edu/pub/ubuntu/ jammy-security main restricted universe multiverse" | sudo tee -a
-          echo "deb [arch=armhf] http://mirror.math.princeton.edu/pub/ubuntu/ jammy-backports main restricted universe multiverse" | sudo tee -a
+          echo "deb [arch=armhf] http://mirror.math.princeton.edu/pub/ubuntu/ jammy main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=armhf] http://mirror.math.princeton.edu/pub/ubuntu/ jammy-updates main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=armhf] http://mirror.math.princeton.edu/pub/ubuntu/ jammy-security main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=armhf] http://mirror.math.princeton.edu/pub/ubuntu/ jammy-backports main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
 
           sudo apt update
           sudo apt install python3:armhf python3-dev:armhf
