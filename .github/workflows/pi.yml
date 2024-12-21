@@ -46,3 +46,13 @@ jobs:
       - name: Verify Boost installation
         run: |
           ls /home/runner/work/Infinium/Infinium/boost
+
+      # Install OpenSSL
+      - name: Install OpenSSL
+        run: |
+          curl -OL https://www.openssl.org/source/openssl-1.1.1n.tar.gz
+          tar xaf openssl-1.1.1n.tar.gz 
+          cd openssl-1.1.1n/
+          ./config linux-armv4 --cross-compile-prefix=arm-linux-gnueabihf- --prefix=/home/runner/work/Infinium/Infinium/openssl --openssldir=/home/runner/work/Infinium/Infinium/openssl shared zlib
+          make
+          make install
