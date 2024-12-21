@@ -26,7 +26,7 @@ jobs:
           # Configurar y compilar Python
           ./configure --host=arm-linux-gnueabihf --build=x86_64-linux-gnu --prefix=/opt/python-arm --enable-shared \
             LDFLAGS="-L/usr/arm-linux-gnueabihf/lib" CPPFLAGS="-I/usr/arm-linux-gnueabihf/include" \
-            --disable-ipv6
+            --disable-ipv6 ac_cv_file__dev_ptmx=no
           make
           make install
 
