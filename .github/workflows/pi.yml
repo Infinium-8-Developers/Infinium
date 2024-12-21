@@ -16,11 +16,11 @@ jobs:
       - name: Configurar herramientas
         run: |
           sudo apt update
-          sudo apt install -y g++-arm-linux-gnueabihf build-essential python3-dev
+          sudo apt install -y gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf build-essential python3-dev
       - name: Descargar Boost
         run: |
           wget https://boostorg.jfrog.io/artifactory/main/release/1.80.0/source/boost_1_80_0.tar.gz
           tar -xzf boost_1_80_0.tar.gz
           cd boost_1_80_0
           ./bootstrap.sh
-          ./b2 install --prefix=$HOME/boost-armv7 target-os=linux architecture=arm address-model=32 abi=aapcs binary-format=elf cxxflags="-march=armv7-a -mfpu=neon -mfloat-abi=hard" -j$(nproc)
+          ./b2 install toolset=gcc-arm target-os=linux architecture=arm address-model=32 abi=aapcs binary-format=elf cxxflags="-march=armv7-a -mfpu=neon -mfloat-abi=hard" linkflags="-march=armv7-a -mfpu=neon -mfloat-abi=hard" -j$(nproc)
