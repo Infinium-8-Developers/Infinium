@@ -19,7 +19,7 @@ jobs:
       - name: Set up cross-compilation toolchain
         run: |
           sudo apt update
-          sudo apt install -y build-essential g++-arm-linux-gnueabihf gcc-arm-linux-gnueabihf wget tar
+          sudo apt install -y build-essential g++-arm-linux-gnueabihf gcc-arm-linux-gnueabihf wget tar curl build-essential python3-dev autotools-dev libicu-dev libbz2-dev cmake git screen checkinstall zlib1g-dev
 
       - name: Download and extract Boost
         run: |
@@ -40,7 +40,7 @@ jobs:
         run: |
           cd boost_1_81_0
           rm -rf boost_1_81_0/tools/build/*
-          ./bootstrap.sh
+          ./bootstrap.sh --with-libraries=system,filesystem,thread,date_time,chrono,regex,serialization,atomic,program_options,locale,timer,log
           ./b2 toolset=gcc-arm --user-config=user-config.jam --prefix=/home/runner/work/Infinium/Infinium/boost
 
       - name: Verify Boost installation
