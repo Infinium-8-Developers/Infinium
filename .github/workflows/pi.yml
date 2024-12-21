@@ -1,0 +1,31 @@
+name: Build CLI
+on:
+  push:
+  pull_request:
+  release:
+    types: [published]
+ 
+env:
+  TAG: ${{ github.ref }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+       # Boost and GCC PI
+      - name: Configurar herramientas
+        run: |
+          sudo apt update
+          sudo apt install -y g++-arm-linux-gnueabihf build-essential
+      - name: Descargar Boost
+        run: |
+          wget https://boostorg.jfrog.io/artifactory/main/release/1.80.0/source/boost_1_80_0.tar.gz
+          tar -xzf boost_1_80_0.tar.gz
+          cd boost_1_80_0
+      - name: Configurar Boost Build
+        run: |
+          ./bootstrap.sh --prefix=/boost
+          echo "using gcc : arm : arm-linux-gnueabihf-g++ ;" > project-config.jam
+      - name: Compilar Boost
+        run: |
+          ./b2 toolset=gcc-arm target-os=linux architecture=arm address-model=32 --with=all install
