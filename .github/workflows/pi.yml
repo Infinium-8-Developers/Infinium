@@ -43,10 +43,6 @@ jobs:
           ./bootstrap.sh --with-libraries=system,filesystem,thread,date_time,chrono,regex,serialization,atomic,program_options,locale,timer,log
           ./b2 toolset=gcc-arm --user-config=user-config.jam --prefix=/home/runner/work/Infinium/Infinium/boost
 
-      - name: Verify Boost installation
-        run: |
-          ls /home/runner/work/Infinium/Infinium/boost
-
       # Install OpenSSL
       - name: Install OpenSSL
         run: |
