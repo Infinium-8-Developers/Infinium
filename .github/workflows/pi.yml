@@ -23,4 +23,8 @@ jobs:
           tar -xzf boost_1_80_0.tar.gz
           cd boost_1_80_0
           ./bootstrap.sh
-          ./b2 install toolset=gcc-arm target-os=linux architecture=arm address-model=32 abi=aapcs binary-format=elf cxxflags="-march=armv7-a -mfpu=neon -mfloat-abi=hard" linkflags="-march=armv7-a -mfpu=neon -mfloat-abi=hard" -j$(nproc)
+          ./b2 install toolset=gcc-arm target-os=linux address-model=32 architecture=armv7-a abi=aapcs binary-format=elf \
+          cxxflags="-march=armv7-a -mfpu=neon -mfloat-abi=hard" \
+          linkflags="-march=armv7-a -mfpu=neon -mfloat-abi=hard" \
+          -j$(nproc)
+
