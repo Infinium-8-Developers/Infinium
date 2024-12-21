@@ -12,22 +12,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Instalar dependencias
-        run: |
-          sudo dpkg --add-architecture armhf
-          echo "deb [arch=armhf] http://mirror.math.princeton.edu/pub/ubuntu/ jammy main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
-          echo "deb [arch=armhf] http://mirror.math.princeton.edu/pub/ubuntu/ jammy-updates main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
-          echo "deb [arch=armhf] http://mirror.math.princeton.edu/pub/ubuntu/ jammy-security main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
-          echo "deb [arch=armhf] http://mirror.math.princeton.edu/pub/ubuntu/ jammy-backports main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
-
-          sudo apt update
-          sudo apt install python3:armhf python3-dev:armhf
-          
        # Boost and GCC PI
       - name: Configurar herramientas
         run: |
           sudo apt update
-          sudo apt install -y g++-arm-linux-gnueabihf build-essential
+          sudo apt install -y g++-arm-linux-gnueabihf build-essential python3-dev
       - name: Descargar Boost
         run: |
           wget https://boostorg.jfrog.io/artifactory/main/release/1.80.0/source/boost_1_80_0.tar.gz
