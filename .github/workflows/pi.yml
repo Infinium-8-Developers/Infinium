@@ -30,6 +30,7 @@ jobs:
         run: |
           echo "using gcc : arm : /usr/bin/arm-linux-gnueabihf-gcc ;" > boost_1_81_0/user-config.jam
           echo "using gcc : arm : /usr/bin/arm-linux-gnueabihf-g++ ;" >> boost_1_81_0/user-config.jam
+          cat boost_1_81_0/user-config.jam  
 
       - name: Set environment variables for cross-compilation
         run: |
