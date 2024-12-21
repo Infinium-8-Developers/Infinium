@@ -24,7 +24,8 @@ jobs:
           cd boost_1_80_0
       - name: Configurar Boost Build
         run: |
-          ./bootstrap.sh --prefix=/boost
+          pwd
+          ./bootstrap.sh --prefix=${pwd}/boost
           echo "using gcc : arm : arm-linux-gnueabihf-g++ ;" > project-config.jam
       - name: Compilar Boost
         run: |
