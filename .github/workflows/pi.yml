@@ -22,9 +22,10 @@ jobs:
           wget https://boostorg.jfrog.io/artifactory/main/release/1.81.0/source/boost_1_81_0.tar.gz
           tar -xzf boost_1_81_0.tar.gz
           cd boost_1_81_0
-          gcc-arm-linux-gnueabihf --version
-          export CC=gcc-arm-linux-gnueabihf
-          export CXX=g++-arm-linux-gnueabihf
+          /usr/bin/arm-linux-gnueabihf-gcc --version
+          /usr/bin/arm-linux-gnueabihf-g++ --version
+          export CC=/usr/bin/arm-linux-gnueabihf-gcc
+          export CXX=/usr/bin/arm-linux-gnueabihf-g++
           ./bootstrap.sh
           ./b2 toolset=gcc-arm target-os=linux address-model=32 architecture=arm abi=aapcs binary-format=elf \
           cxxflags="-march=armv7-a -mfpu=neon -mfloat-abi=hard" \
