@@ -14,23 +14,10 @@ jobs:
     steps:
       - name: Instalar dependencias
         run: |
+          sudo dpkg --add-architecture armhf
           sudo apt update
-          sudo apt install -y g++-arm-linux-gnueabihf make wget build-essential zlib1g-dev
-          wget https://www.python.org/ftp/python/3.10.12/Python-3.10.12.tgz
-          tar -xzf Python-3.10.12.tgz
-          cd Python-3.10.12
-      
-          # Establecer la variable para evitar la verificación de /dev/ptmx
-          echo "ac_cv_file__dev_ptmx=no" > $GITHUB_WORKSPACE/config.site
-          export CONFIG_SITE=$GITHUB_WORKSPACE/config.site
-      
-          # Configurar y compilar Python
-          ./configure --host=arm-linux-gnueabihf --build=x86_64-linux-gnu --prefix=/opt/python-arm --enable-shared \
-            LDFLAGS="-L/usr/arm-linux-gnueabihf/lib" CPPFLAGS="-I/usr/arm-linux-gnueabihf/include" \
-            --disable-ipv6 --disable-assertions --without-ensurepip
-          make
-          make install
-
+          sudo apt install python3:armhf python3-dev:armhf
+          
        # Boost and GCC PI
       - name: Configurar herramientas
         run: |
