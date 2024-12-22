@@ -12,7 +12,7 @@ jobs:
   build:
     runs-on: ubuntu-22.04  # Usamos Ubuntu como base para el trabajo
     env:
-        LABEL: windows
+        LABEL: armv7
     steps:
       - name: Check out repository
         uses: actions/checkout@v3  # Para obtener el código fuente del repositorio
@@ -79,7 +79,6 @@ jobs:
           if [[ "${TAG:5:4}" == "tags" ]]; then export TAG=${TAG:10}; else export TAG=${COMMIT_SHA}; fi
           cd build/src
           TARGETS="infiniumd connectivity_tool simplewallet"
-          if [[ "${LABEL}" != "aarch64" ]]; then strip ${TARGETS}; fi
           rm -rf Infinium-${TAG}
           mkdir Infinium-${TAG}
           cp ${TARGETS} Infinium-${TAG}/
