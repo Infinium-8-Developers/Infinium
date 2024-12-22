@@ -70,33 +70,52 @@ jobs:
           tar -xvzf icu4c-73_2-src.tgz
           cd icu/source
           
-          # Compilar para la máquina anfitriona (x86)
-          sudo ./configure --prefix=/tmp/icu-host --enable-static --enable-shared
-          sudo make -j$(nproc)
-          sudo make install
+
+          echo "Compilando ICU para la máquina anfitriona (x86)..."
+          ./configure --prefix=/tmp/icu-host --enable-static --enable-shared
+          if ! make -j$(nproc); then
+              echo "Error: Fallo al compilar ICU para x86."
+              exit 1
+          fi
           
-          # Verificar que icucross.mk existe
+          if ! make install; then
+              echo "Error: Fallo al instalar ICU para x86."
+              exit 1
+          fi
+          
+
           if [ ! -f /tmp/icu-host/config/icucross.mk ]; then
               echo "Error: icucross.mk no encontrado. Verifica la compilación para x86."
               exit 1
           fi
           
-          # Limpiar configuraciones previas
-          sudo make distclean
+
+          echo "Limpiando configuraciones previas..."
+          make distclean
           
-          # Compilar para ARM y colocar en /usr/arm-linux-gnueabihf
-          sudo ./configure \
+
+          echo "Compilando ICU para ARM..."
+          ./configure \
               --host=arm-linux-gnueabihf \
               --with-cross-build=/tmp/icu-host \
-              --prefix=/usr/arm-linux-gnueabihf \
+              --prefix=/tmp/icu-arm \
               --enable-shared \
               --enable-static
-          sudo make -j$(nproc)
-          sudo make install
           
-          # Verificación final
+          if ! make -j$(nproc); then
+              echo "Error: Fallo al compilar ICU para ARM."
+              exit 1
+          fi
+          
+          if ! make install; then
+              echo "Error: Fallo al instalar ICU para ARM."
+              exit 1
+          fi
+          
+          echo "Instalando bibliotecas en /usr/arm-linux-gnueabihf..."
+          sudo cp -r /tmp/icu-arm/* /usr/arm-linux-gnueabihf/
+          
           echo "Compilación completada. Las bibliotecas para ARM están en /usr/arm-linux-gnueabihf."
-
 
       # Install 
       - name: Build
