@@ -22,7 +22,7 @@ jobs:
           sudo apt-get install aptitude
           sudo aptitude search zlib1g-dev
           sudo apt update
-          sudo apt install -y build-essential g++-arm-linux-gnueabihf gcc-arm-linux-gnueabihf wget tar curl build-essential python3-dev autotools-dev libicu-dev libbz2-dev cmake git screen checkinstall
+          sudo apt install -y build-essential g++-arm-linux-gnueabihf gcc-arm-linux-gnueabihf wget tar curl build-essential python3-dev autotools-dev libicu-dev libbz2-dev cmake git screen checkinstall libicu-dev
 
       - name: Download and extract Boost
         run: |
