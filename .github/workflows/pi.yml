@@ -74,15 +74,7 @@ jobs:
           make 
           make install     
 
-          ls /home/runner/work/Infinium/Infinium/icu/source/config
 
-          make distclean
-          
-          ./configure --host=arm-linux-gnueabihf --with-cross-build=/home/runner/work/Infinium/Infinium/icu/source --prefix=/tmp/icu-host --enable-static --enable-shared
-          make
-          make install
-          
-          sudo cp -r /home/runner/work/Infinium/Infinium/icu/source/* /usr/arm-linux-gnueabihf/
           
       # Install 
       - name: Build
