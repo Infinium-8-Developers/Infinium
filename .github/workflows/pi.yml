@@ -65,17 +65,38 @@ jobs:
 
       - name: Dep
         run: |
+
           wget https://github.com/unicode-org/icu/releases/download/release-73-2/icu4c-73_2-src.tgz
           tar -xvzf icu4c-73_2-src.tgz
           cd icu/source
-          ./configure --prefix=/tmp/icu-host --enable-static --enable-shared
-          make
-          make install
-          make clean
           
-          ./configure --host=arm-linux-gnueabihf --with-cross-build=/tmp/icu-host --prefix=/usr/arm-linux-gnueabihf --enable-shared --enable-static
-          make
-          make install
+          # Compilar para la máquina anfitriona (x86)
+          sudo ./configure --prefix=/tmp/icu-host --enable-static --enable-shared
+          sudo make -j$(nproc)
+          sudo make install
+          
+          # Verificar que icucross.mk existe
+          if [ ! -f /tmp/icu-host/config/icucross.mk ]; then
+              echo "Error: icucross.mk no encontrado. Verifica la compilación para x86."
+              exit 1
+          fi
+          
+          # Limpiar configuraciones previas
+          sudo make distclean
+          
+          # Compilar para ARM y colocar en /usr/arm-linux-gnueabihf
+          sudo ./configure \
+              --host=arm-linux-gnueabihf \
+              --with-cross-build=/tmp/icu-host \
+              --prefix=/usr/arm-linux-gnueabihf \
+              --enable-shared \
+              --enable-static
+          sudo make -j$(nproc)
+          sudo make install
+          
+          # Verificación final
+          echo "Compilación completada. Las bibliotecas para ARM están en /usr/arm-linux-gnueabihf."
+
 
       # Install 
       - name: Build
