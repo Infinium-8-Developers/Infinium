@@ -70,53 +70,20 @@ jobs:
           tar -xvzf icu4c-73_2-src.tgz
           cd icu/source
           
+          ./configure --prefix=/home/runner/work/Infinium/Infinium/icu/source --enable-static --enable-shared
+          make 
+          make install     
 
-          echo "Compilando ICU para la máquina anfitriona (x86)..."
-          ./configure --prefix=/tmp/icu-host --enable-static --enable-shared
-          if ! make -j$(nproc); then
-              echo "Error: Fallo al compilar ICU para x86."
-              exit 1
-          fi
-          
-          if ! make install; then
-              echo "Error: Fallo al instalar ICU para x86."
-              exit 1
-          fi
-          
+          ls /home/runner/work/Infinium/Infinium/icu/source/config
 
-          if [ ! -f /tmp/icu-host/config/icucross.mk ]; then
-              echo "Error: icucross.mk no encontrado. Verifica la compilación para x86."
-              exit 1
-          fi
-          
-
-          echo "Limpiando configuraciones previas..."
           make distclean
           
-
-          echo "Compilando ICU para ARM..."
-          ./configure \
-              --host=arm-linux-gnueabihf \
-              --with-cross-build=/tmp/icu-host \
-              --prefix=/tmp/icu-arm \
-              --enable-shared \
-              --enable-static
+          ./configure --host=arm-linux-gnueabihf --with-cross-build=/home/runner/work/Infinium/Infinium/icu/source --prefix=/tmp/icu-host --enable-static --enable-shared
+          make
+          make install
           
-          if ! make -j$(nproc); then
-              echo "Error: Fallo al compilar ICU para ARM."
-              exit 1
-          fi
+          sudo cp -r /home/runner/work/Infinium/Infinium/icu/source/* /usr/arm-linux-gnueabihf/
           
-          if ! make install; then
-              echo "Error: Fallo al instalar ICU para ARM."
-              exit 1
-          fi
-          
-          echo "Instalando bibliotecas en /usr/arm-linux-gnueabihf..."
-          sudo cp -r /tmp/icu-arm/* /usr/arm-linux-gnueabihf/
-          
-          echo "Compilación completada. Las bibliotecas para ARM están en /usr/arm-linux-gnueabihf."
-
       # Install 
       - name: Build
         run: |
