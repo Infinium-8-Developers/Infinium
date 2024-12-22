@@ -63,6 +63,15 @@ jobs:
           make
           make install
 
+      - name: Dep
+        run: |
+          wget https://github.com/unicode-org/icu/releases/download/release-73-2/icu4c-73_2-src.tgz
+          tar -xvzf icu4c-73_2-src.tgz
+          cd icu/source
+          ./configure --host=arm-linux-gnueabihf --prefix=/usr/arm-linux-gnueabihf --enable-shared --enable-static
+          make -j$(nproc)
+          make install
+
       # Install 
       - name: Build
         run: |
