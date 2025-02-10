@@ -26,8 +26,7 @@ jobs:
 
       - name: Download and extract Boost
         run: |
-          wget https://boostorg.jfrog.io/artifactory/main/release/1.81.0/source/boost_1_81_0.tar.gz
-          tar -xf boost_1_81_0.tar.gz
+          git clone --recursive -b boost-1.81.0 https://github.com/boostorg/boost.git boost_1_81_0
 
       - name: Create user-config.jam for cross-compilation
         run: |
