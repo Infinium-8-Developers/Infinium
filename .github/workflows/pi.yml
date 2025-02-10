@@ -70,7 +70,7 @@ jobs:
           tar -xvzf icu4c-73_2-src.tgz
           cd icu/source
           
-          ./configure --prefix=/home/runner/work/Infinium/Infinium/icu/source --enable-static --enable-shared
+          ./configure --prefix=/home/runner/work/Infinium/Infinium/icu/source --enable-static --enable-shared --disable-samples --disable-tests
           make 
           make install     
 
