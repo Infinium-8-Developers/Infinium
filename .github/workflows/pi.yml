@@ -69,8 +69,8 @@ jobs:
           tar -xvzf icu4c-73_2-src.tgz
           cd icu/source
           
-          ./configure --prefix=/home/runner/work/Infinium/Infinium/icu/source --enable-static --enable-shared --disable-samples --disable-tests
-          make 
+          CC=arm-linux-gnueabihf-gcc CXX=arm-linux-gnueabihf-g++ ./configure --prefix=/home/runner/work/Infinium/Infinium/icu/source --enable-static --enable-shared --disable-samples --disable-tests
+          make -j1 
           make install     
 
 
